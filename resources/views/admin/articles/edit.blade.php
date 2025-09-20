@@ -16,58 +16,57 @@
             <div class="form-group mb-3">
                 <label for="title">Title</label>
                 <input type="text" name="title" class="form-control"
-                       value="{{ old('title', $event->title) }}" required>
+                       value="{{ old('title') }}" required>
             </div>
 
             <div class="form-group mb-3">
-                <label for="description">Description</label>
-                <textarea name="description" class="form-control" rows="4">{{ old('description', $event->description) }}</textarea>
+                <label for="abstract">Abstract</label>
+                <textarea name="abstract" class="form-control" rows="4">{{ old('abstract') }}</textarea>
             </div>
 
             <div class="form-group mb-3">
-                <label for="event_date">Start Date</label>
-                <input type="date" name="event_date" class="form-control"
-                       value="{{ old('event_date', $event->event_date) }}" required>
+                <label for="content">Content</label>
+                <textarea name="content" class="form-control" rows="10">{{ old('content') }}</textarea>
             </div>
 
             <div class="form-group mb-3">
-                <label for="event_date_end">End Date</label>
-                <input type="date" name="event_date_end" class="form-control"
-                       value="{{ old('event_date_end', $event->event_date_end) }}">
-            </div>
-
-            <div class="form-group mb-3">
-                <label for="location">Location</label>
-                <input type="text" name="location" class="form-control"
-                       value="{{ old('location', $event->location) }}">
+                <label for="author">Author</label>
+                <input type="text" name="author" class="form-control"
+                       value="{{ old('author') }}" required>
             </div>
 
             <div class="form-group mb-3">
                 <label for="image">Image</label><br>
-                @if($event->image)
-                    <img src="{{ asset('storage/'.$event->image) }}" alt="Event Image" class="img-thumbnail mb-2" width="200">
-                @endif
+                {{-- @if($article->image) --}}
+                    <img src="{{ asset('storage/') }}" alt="Article Image" class="img-thumbnail mb-2" width="200">
+                {{-- @endif --}}
                 <input type="file" name="image" class="form-control">
             </div>
 
             <div class="form-group mb-3">
                 <label for="status">Status</label>
                 {{-- <select name="status" class="form-control">
-                    <option value={{App\Enums\Status::EDIT_DRAFT}} {{ old('status', $event->status) == App\Enums\Status::EDIT_DRAFT ? 'selected' : '' }}>Draft</option>
-                    <option value={{App\Enums\Status::EDIT_PUPLISHED}} {{ old('status', $event->status) == App\Enums\Status::EDIT_PUPLISHED ? 'selected' : '' }}>Published</option>
-                    <option value={{App\Enums\Status::EDIT_FINISHED}}{{ old('status', $event->status) == App\Enums\Status::EDIT_FINISHED ? 'selected' : '' }}>Cancelled</option>
+                    <option value={{App\Enums\Status::EDIT_DRAFT}} {{ old('status', $article->status) == App\Enums\Status::EDIT_DRAFT ? 'selected' : '' }}>Draft</option>
+                    <option value={{App\Enums\Status::EDIT_PUPLISHED}} {{ old('status', $article->status) == App\Enums\Status::EDIT_PUPLISHED ? 'selected' : '' }}>Published</option>
+                    <option value={{App\Enums\Status::EDIT_FINISHED}}{{ old('status', $article->status) == App\Enums\Status::EDIT_FINISHED ? 'selected' : '' }}>Cancelled</option>
                 </select> --}}
                 <select name="status" class="form-control">
                     @foreach(App\Enums\Status::cases() as $status)
-                        <option value="{{ $status->value }}" @selected(old('status', $event->status->value) == $status->value)>
+                        <option value="{{ $status->value }}" @selected(old('status') == $status->value)>
                             {{ $status->label() }}
                         </option>
                     @endforeach
                 </select>
             </div>
 
+            <div class="form-group mb-3">
+                <label for="published_at">Published at</label>
+                <input type="date" name="published_at" class="form-control"
+                       value="{{ old('published_at') }}" required>
+            </div>
+
             <button type="submit" class="btn btn-success">Update</button>
-            <a href="{{ route('admin.events.index') }}" class="btn btn-secondary">Cancel</a>
+            <a href="{{ route('admin.articles.index') }}" class="btn btn-secondary">Cancel</a>
         </form>
     </div>
 </div>

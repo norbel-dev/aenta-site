@@ -18,26 +18,19 @@
             </div>
 
             <div class="form-group mb-3">
-                <label for="description">Description</label>
-                <textarea name="description" class="form-control" rows="4">{{ old('description') }}</textarea>
+                <label for="abstract">Abstract</label>
+                <textarea name="abstract" class="form-control" rows="4">{{ old('abstract') }}</textarea>
             </div>
 
             <div class="form-group mb-3">
-                <label for="article_date">Start Date</label>
-                <input type="date" name="article_date" class="form-control"
-                       value="{{ old('article_date') }}" required>
+                <label for="content">Content</label>
+                <textarea name="content" class="form-control" rows="10">{{ old('content') }}</textarea>
             </div>
 
             <div class="form-group mb-3">
-                <label for="article_date_end">End Date</label>
-                <input type="date" name="article_date_end" class="form-control"
-                       value="{{ old('article_date_end') }}">
-            </div>
-
-            <div class="form-group mb-3">
-                <label for="location">Location</label>
-                <input type="text" name="location" class="form-control"
-                       value="{{ old('location') }}">
+                <label for="author">Author</label>
+                <input type="text" name="author" class="form-control"
+                       value="{{ old('author') }}" required>
             </div>
 
             <div class="form-group mb-3">
@@ -62,6 +55,12 @@
                         </option>
                     @endforeach
                 </select>
+            </div>
+
+            <div class="form-group mb-3">
+                <label for="published_at">Published at</label>
+                <input type="date" name="published_at" class="form-control"
+                       value="{{ old('published_at') }}" required>
             </div>
 
             <button type="submit" class="btn btn-success">Create</button>
