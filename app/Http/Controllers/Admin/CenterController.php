@@ -11,12 +11,12 @@ class CenterController extends Controller
     public function index()
     {
         $centers = Center::all();
-        return view('centers.index', compact('centers'));
+        return view('admin.centers.index', compact('centers'));
     }
 
     public function show(Center $center)
     {
-        return view('centers.show', compact('center'));
+        return view('admin.centers.show', compact('center'));
     }
 
     public function create()
@@ -32,7 +32,7 @@ class CenterController extends Controller
         ]);
 
         Center::create($request->all());
-        return redirect()->route('centers.index')->with('success', 'Center created successfully.');
+        return redirect()->route('admin.centers.index')->with('success', 'Center created successfully.');
     }
 
     public function edit(Center $center)
@@ -43,12 +43,12 @@ class CenterController extends Controller
     public function update(Request $request, Center $center)
     {
         $center->update($request->all());
-        return redirect()->route('centers.index')->with('success', 'Center updated successfully.');
+        return redirect()->route('admin.centers.index')->with('success', 'Center updated successfully.');
     }
 
     public function destroy(Center $center)
     {
         $center->delete();
-        return redirect()->route('centers.index')->with('success', 'Center deleted successfully.');
+        return redirect()->route('admin.centers.index')->with('success', 'Center deleted successfully.');
     }
 }

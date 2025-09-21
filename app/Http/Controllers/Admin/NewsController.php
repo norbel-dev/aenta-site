@@ -12,8 +12,8 @@ class NewsController extends Controller
 {
     public function index()
     {
-        $news = News::where('status', Status::EDIT_PUBLISHED)->latest()->get();
-        return view('admin.news.index', compact('news'));
+        $newss = News::where('status', Status::EDIT_PUBLISHED)->latest()->get();
+        return view('admin.news.index', compact('newss'));
     }
 
     public function show(News $news)
