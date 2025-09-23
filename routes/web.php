@@ -1,6 +1,7 @@
 <?php
 
 use App\Enums\Status;
+use App\Http\Controllers\HomeController;
 use App\Models\Article;
 use App\Models\Center;
 use App\Models\Event;
@@ -21,11 +22,8 @@ use Illuminate\Support\Facades\Route;
 //     })->name('dashboard');
 // });
 
-Route::get('/', function () {
-    return view('home', [
-        'center' => Center::first(),
-        'news' => News::where('status', Status::EDIT_PUBLISHED)->latest()->take(3)->get(),
-        'events' => Event::where('status', Status::EDIT_PUBLISHED)->orderBy('event_date', 'asc')->take(3)->get(),
-        'articles' => Article::where('status', Status::EDIT_PUBLISHED)->latest()->take(2)->get(),
-    ]);
-});
+Route::get('/', [HomeController::class, 'index']);
+Route::get('/article/{article}', [HomeController::class, 'show_article'])->name('show_article');
+Route::get('/center/{center}', [HomeController::class, 'show_center'])->name('show_center');
+Route::get('/event/{event}', [HomeController::class, 'show_event'])->name('show_event');
+Route::get('/news/{news}', [HomeController::class, 'show_news'])->name('show_news');

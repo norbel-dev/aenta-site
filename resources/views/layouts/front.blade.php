@@ -25,6 +25,7 @@
                     <li class="nav-item"><a class="nav-link" href="#"><i class="zmdi zmdi-calendar zmdi-hc-fw"></i> Events</a></li>
                     <li class="nav-item"><a class="nav-link" href="#"><i class="zmdi zmdi-file zmdi-hc-fw"></i> Articles</a></li>
                     <li class="nav-item"><a class="nav-link" href="#"><i class="zmdi zmdi-info zmdi-hc-fw"></i> About Us</a></li>
+                    <li class="nav-item"><a class="nav-link" href="{{route('login')}}"><i class="zmdi zmdi-sign-in zmdi-hc-fw"></i> Login</a></li>
                 </ul>
             </div>
         </div>
