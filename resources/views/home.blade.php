@@ -14,7 +14,7 @@
                     <div class="card-body">
                         <h5>{{ $item->title }}</h5>
                         <p>{{ Str::limit($item->content, 80) }}</p>
-                        <a href="{{ route('news.show', $item) }}" class="btn btn-sm btn-outline-primary">Read more</a>
+                        <a href="#" class="btn btn-sm btn-outline-primary">Read more</a>
                     </div>
                 </div>
             </div>
@@ -40,7 +40,7 @@
         <div class="mb-3">
             <h5>{{ $article->title }}</h5>
             <p>{{ $article->abstract }}</p>
-            <a href="{{ route('articles.show', $article) }}" class="btn btn-sm btn-outline-secondary">Read full article</a>
+            <a href="#" class="btn btn-sm btn-outline-secondary">Read full article</a>
         </div>
     @endforeach
 </div>

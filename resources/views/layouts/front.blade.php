@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{{ config('app.name', 'Company Website') }}</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="{{ URL::asset('themes/material-design-iconic-font/dist/css/material-design-iconic-font.min.css') }}" type="text/css" />
     @stack('styles')
 </head>
 <body class="d-flex flex-column min-vh-100">
@@ -20,11 +21,10 @@
             </button>
             <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav ms-auto">
-                    <li class="nav-item"><a class="nav-link" href="{{ url('/') }}">Home</a></li>
-                    <li class="nav-item"><a class="nav-link" href="#">News</a></li>
-                    <li class="nav-item"><a class="nav-link" href="#">Events</a></li>
-                    <li class="nav-item"><a class="nav-link" href="#">Articles</a></li>
-                    <li class="nav-item"><a class="nav-link" href="#">About Us</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#"><i class="zmdi zmdi-collection-text zmdi-hc-fw"></i> News</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#"><i class="zmdi zmdi-calendar zmdi-hc-fw"></i> Events</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#"><i class="zmdi zmdi-file zmdi-hc-fw"></i> Articles</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#"><i class="zmdi zmdi-info zmdi-hc-fw"></i> About Us</a></li>
                 </ul>
             </div>
         </div>

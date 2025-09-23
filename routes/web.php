@@ -1,5 +1,6 @@
 <?php
 
+use App\Enums\Status;
 use App\Models\Article;
 use App\Models\Center;
 use App\Models\Event;
@@ -23,8 +24,8 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', function () {
     return view('home', [
         'center' => Center::first(),
-        'news' => News::where('status', 'published')->latest()->take(3)->get(),
-        'events' => Event::where('status', 'published')->orderBy('event_date', 'asc')->take(3)->get(),
-        'articles' => Article::where('status', 'published')->latest()->take(2)->get(),
+        'news' => News::where('status', Status::EDIT_PUBLISHED)->latest()->take(3)->get(),
+        'events' => Event::where('status', Status::EDIT_PUBLISHED)->orderBy('event_date', 'asc')->take(3)->get(),
+        'articles' => Article::where('status', Status::EDIT_PUBLISHED)->latest()->take(2)->get(),
     ]);
 });
