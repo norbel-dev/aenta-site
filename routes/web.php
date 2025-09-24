@@ -23,7 +23,14 @@ use Illuminate\Support\Facades\Route;
 // });
 
 Route::get('/', [HomeController::class, 'index']);
+Route::get('/article', [HomeController::class, 'article'])->name('articles');
 Route::get('/article/{article}', [HomeController::class, 'show_article'])->name('show_article');
+
+Route::get('/center', [HomeController::class, 'center'])->name('centers');
 Route::get('/center/{center}', [HomeController::class, 'show_center'])->name('show_center');
+
+Route::get('/event', [HomeController::class, 'event'])->name('events');
 Route::get('/event/{event}', [HomeController::class, 'show_event'])->name('show_event');
+
+Route::get('/news', [HomeController::class, 'news'])->name('news');
 Route::get('/news/{news}', [HomeController::class, 'show_news'])->name('show_news');

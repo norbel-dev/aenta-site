@@ -11,19 +11,20 @@
 <body class="d-flex flex-column min-vh-100">
 
     {{-- Navbar --}}
-    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
         <div class="container">
-            <a class="navbar-brand" href="{{ url('/') }}">
+            {{-- <a class="navbar-brand" href="{{ url('/') }}">
                 {{ config('app.name', 'Company Website') }}
-            </a>
+            </a> --}}
+            <img src="{{URL::asset('img/logo-aenta12.png')}}" alt="{{ config('app.name', 'Company Website') }}">
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
                 <span class="navbar-toggler-icon"></span>
             </button>
             <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav ms-auto">
-                    <li class="nav-item"><a class="nav-link" href="#"><i class="zmdi zmdi-collection-text zmdi-hc-fw"></i> News</a></li>
-                    <li class="nav-item"><a class="nav-link" href="#"><i class="zmdi zmdi-calendar zmdi-hc-fw"></i> Events</a></li>
-                    <li class="nav-item"><a class="nav-link" href="#"><i class="zmdi zmdi-file zmdi-hc-fw"></i> Articles</a></li>
+                    <li class="nav-item"><a class="nav-link" href="{{route('news')}}"><i class="zmdi zmdi-collection-text zmdi-hc-fw"></i> News</a></li>
+                    <li class="nav-item"><a class="nav-link" href="{{route('events')}}"><i class="zmdi zmdi-calendar zmdi-hc-fw"></i> Events</a></li>
+                    <li class="nav-item"><a class="nav-link" href="{{route('articles')}}"><i class="zmdi zmdi-file zmdi-hc-fw"></i> Articles</a></li>
                     <li class="nav-item"><a class="nav-link" href="#"><i class="zmdi zmdi-info zmdi-hc-fw"></i> About Us</a></li>
                     <li class="nav-item"><a class="nav-link" href="{{route('login')}}"><i class="zmdi zmdi-sign-in zmdi-hc-fw"></i> Login</a></li>
                 </ul>

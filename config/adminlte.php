@@ -350,6 +350,16 @@ return [
             'icon' => 'fas fa-fw fa-lock',
         ],
         // [
+        //     'text' => 'logs',
+        //     'url' => '#',
+        //     'icon' => 'fas fa-fw fa-lock',
+        // ],
+        // [
+        //     'text' => 'log_access',
+        //     'url' => '#',
+        //     'icon' => 'fas fa-fw fa-lock',
+        // ],
+        // [
         //     'text' => 'multilevel',
         //     'icon' => 'fas fa-fw fa-share',
         //     'submenu' => [
