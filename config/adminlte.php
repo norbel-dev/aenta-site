@@ -63,7 +63,7 @@ return [
     |
     */
 
-    'logo' => '<b>AENTA</b>',
+    'logo' => '<p>Agencia de Energía Nuclear y Tecnologías de Avanzada</p>',
     'logo_img' => 'vendor/adminlte/dist/img/aentalogo.png',
     'logo_img_class' => 'brand-image img-circle elevation-3',
     'logo_img_xl' => null,
