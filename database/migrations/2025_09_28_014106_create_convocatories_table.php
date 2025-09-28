@@ -1,5 +1,6 @@
 <?php
 
+use App\Enums\Media;
 use App\Enums\Status;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
@@ -12,13 +13,13 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('headers', function (Blueprint $table) {
+        Schema::create('convocatories', function (Blueprint $table) {
             $table->id();
             $table->string('title');
-            $table->text('content');
-            $table->string('image');
+            $table->enum('media', Media::cases())->default(Media::PDF);
+            $table->date('date');
+            $table->date('date_end')->nullable();
             $table->enum('status', Status::cases())->default(status::EDIT_DRAFT);
-            $table->timestamp('published_at')->nullable();
             $table->timestamps();
         });
     }
@@ -28,6 +29,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('headers');
+        Schema::dropIfExists('convocatories');
     }
 };

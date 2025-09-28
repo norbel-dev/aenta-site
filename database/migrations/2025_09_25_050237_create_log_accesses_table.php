@@ -13,6 +13,10 @@ return new class extends Migration
     {
         Schema::create('log_accesses', function (Blueprint $table) {
             $table->id();
+            $table->string('ip');
+            $table->timestamp('date');
+            $table->boolean('block');
+            $table->integer('id_user')->nullable();
             $table->timestamps();
         });
     }

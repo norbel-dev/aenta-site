@@ -21,12 +21,12 @@
                 </tr>
             </thead>
             <tbody>
-            @foreach($newss as $news)
+            @foreach($news as $item)
                 <tr>
-                    <td>{{ $news->title }}</td>
-                    <td>{{ $news->content }}</td>
+                    <td>{{ $item->title }}</td>
+                    <td>{{ $item->content }}</td>
                     <td>
-                        <span class="badge bg-{{ $news->status->color() }}">{{ $news->status->label() }}</span>
+                        <span class="badge bg-{{ $item->status->color() }}">{{ $item->status->label() }}</span>
                         {{-- @if($new->status == $status->EDIT_DRAFT)
                             <span class="badge bg-success">Published</span>
                         @elseif($new->status == 'draft')
@@ -35,10 +35,10 @@
                             <span class="badge bg-danger">Cancelled</span>
                         @endif --}}
                     </td>
-                    <td>{{ $news->published_at }}</td>
+                    <td>{{ $item->published_at }}</td>
                     <td>
-                        <a href="{{ route('admin.news.edit', $news) }}" class="btn btn-warning btn-sm">Edit</a>
-                        <form action="{{ route('admin.news.destroy', $news) }}" method="POST" style="display:inline-block;">
+                        <a href="{{ route('admin.news.edit', $item) }}" class="btn btn-warning btn-sm">Edit</a>
+                        <form action="{{ route('admin.news.destroy', $item) }}" method="POST" style="display:inline-block;">
                             @csrf @method('DELETE')
                             <button type="submit" class="btn btn-danger btn-sm"
                                 onclick="return confirm('Delete this new?')">Delete</button>
