@@ -28,9 +28,9 @@ class DatabaseSeeder extends Seeder
         //     'name' => 'Test User',
         //     'email' => 'test@example.com',
         // ]);
-        $superadmin = Role::where('name', 'super_admin')->get()[0];
-        User::find(1)->roles()->sync($superadmin);
-        return;
+        // $superadmin = Role::where('name', 'super_admin')->get()[0];
+        // User::find(1)->roles()->sync($superadmin);
+        // return;
 
         $superadmin = Role::create(['name' => 'super_admin']);
         $admin = Role::create(['name' => 'admin']);
@@ -64,19 +64,19 @@ class DatabaseSeeder extends Seeder
         Permission::create(['name' => 'admin.users.edit'])->syncRoles([$superadmin, $admin]);
         Permission::create(['name' => 'admin.users.destroy'])->syncRoles([$superadmin, $admin]);
 
-        // User::create([
-        //     'name' => 'Norbel González Peña',
-        //     'email' => 'norbelkots@gmail.com',
-        //     'email_verified_at' => now(),
-        //     'password' => bcrypt('L0tt3ry34*Aent@Site'), // password
-        //     'two_factor_secret' => null,
-        //     'two_factor_recovery_codes' => null,
-        //     'remember_token' => Str::random(10),
-        //     'profile_photo_path' => null,
-        //     'current_team_id' => null,
-        // ]);
+        User::create([
+            'name' => 'Norbel González Peña',
+            'email' => 'norbelkots@gmail.com',
+            'email_verified_at' => now(),
+            'password' => bcrypt('L0tt3ry34*Aent@Site'), // password
+            'two_factor_secret' => null,
+            'two_factor_recovery_codes' => null,
+            'remember_token' => Str::random(10),
+            'profile_photo_path' => null,
+            'current_team_id' => null,
+        ]);
 
-        // User::find(1)->roles()->sync($superadmin);
+        User::find(1)->roles()->sync($superadmin);
 
         $this->CreateArticles();
         $this->CreateCenters();

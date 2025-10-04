@@ -2,11 +2,14 @@
 
 use App\Enums\Status;
 use App\Http\Controllers\HomeController;
+use App\Http\Controllers\LandingPageController;
 use App\Models\Article;
 use App\Models\Center;
 use App\Models\Event;
 use App\Models\News;
 use Illuminate\Support\Facades\Route;
+
+Route::get('/', [LandingPageController::class, 'index']);
 
 // Route::get('/', function () {
 //     return view('home');
@@ -22,7 +25,7 @@ use Illuminate\Support\Facades\Route;
 //     })->name('dashboard');
 // });
 
-Route::get('/', [HomeController::class, 'index']);
+// Route::get('/', [HomeController::class, 'index']);
 Route::get('/article', [HomeController::class, 'article'])->name('articles');
 Route::get('/article/{article}', [HomeController::class, 'show_article'])->name('show_article');
 
