@@ -34,11 +34,25 @@
             color: var(--aenta-blue);
         }
         .section-bar {
-            background-color: var(--aenta-section-bg);
-            color: white;
+            background-color: var(--aenta-card-bg);
+            /* color: white; */
             text-align: center;
             padding: 1rem 0;
-            margin-bottom: 2rem;
+            /* margin-bottom: 2rem; */
+        }
+        .section-bar-link {
+            /* background-color: var(--aenta-section-bg); */
+            color: rgb(29, 28, 28);
+            /* text-align: center; */
+            /* margin-bottom: 2rem; */
+        }
+        .section-bar-link img {
+            max-height: 40px;
+            max-width: 40px;
+        }
+        .carousel-item img {
+            max-height: 250px;
+            width: 100%;
         }
         .content-card {
             background-color: var(--aenta-card-bg);
@@ -66,7 +80,7 @@
             font-size: 0.9rem;
         }
         .main-container {
-            padding-bottom: 80px; /* Footer height */
+            padding-bottom: 50px; /* Footer height */
         }
     </style>
 </head>
@@ -99,39 +113,46 @@
         </div>
     </nav>
 
-    <div class="main-container container mt-4">
-        <div id="imageCarousel" class="carousel slide" data-bs-ride="carousel">
-        <div class="carousel-inner">
-            <div class="carousel-item active">
-                <img src="{{ asset('img/logo-aenta12.png') }}" class="d-block" alt="...">
-                <div class="carousel-caption d-none d-md-block">
-                    <h5>First slide label</h5>
-                </div>
-            </div>
-            <div class="carousel-item">
-                <img src="{{ asset('img/logo-aenta12.png') }}" class="d-block" alt="...">
-                <div class="carousel-caption d-none d-md-block">
-                    <h5>Second slide label</h5>
-                </div>
-            </div>
-            <div class="carousel-item">
-                <img src="{{ asset('img/logo-aenta12.png') }}" class="d-block" alt="...">
-                <div class="carousel-caption d-none d-md-block">
-                    <h5>Third slide label</h5>
-                </div>
-            </div>
-        </div>
-        <button class="carousel-control-prev" type="button" data-bs-target="#imageCarousel" data-bs-slide="prev">
-            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-            <span class="visually-hidden">Previous</span>
-        </button>
-        <button class="carousel-control-next" type="button" data-bs-target="#imageCarousel" data-bs-slide="next">
-            <span class="carousel-control-next-icon" aria-hidden="true"></span>
-            <span class="visually-hidden">Next</span>
-        </button>
-    </div>
 
-        <div class="row g-4">
+        <div id="imageCarousel" class="carousel slide" data-bs-ride="carousel">
+            <div class="carousel-inner">
+                <div class="carousel-item active">
+                    <img src="{{ asset('img/ciclotron.png') }}" class="d-block" alt="...">
+                    <div class="carousel-caption d-none d-md-block">
+                        <h5>First slide label</h5>
+                    </div>
+                </div>
+                <div class="carousel-item">
+                    <img src="{{ asset('img/otoz.png') }}" class="d-block" alt="...">
+                    <div class="carousel-caption d-none d-md-block">
+                        <h5>Second slide label</h5>
+                    </div>
+                </div>
+                <div class="carousel-item">
+                    <img src="{{ asset('img/irradiacion.png') }}" class="d-block" alt="...">
+                    <div class="carousel-caption d-none d-md-block">
+                        <h5>Third slide label</h5>
+                    </div>
+                </div>
+                <div class="carousel-item">
+                    <img src="{{ asset('img/united-nation.png') }}" class="d-block" alt="...">
+                    <div class="carousel-caption d-none d-md-block">
+                        <h5>Four slide label</h5>
+                    </div>
+                </div>
+            </div>
+            <button class="carousel-control-prev" type="button" data-bs-target="#imageCarousel" data-bs-slide="prev">
+                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                <span class="visually-hidden">Previous</span>
+            </button>
+            <button class="carousel-control-next" type="button" data-bs-target="#imageCarousel" data-bs-slide="next">
+                <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                <span class="visually-hidden">Next</span>
+            </button>
+        </div>
+
+    <div class="main-container container-fluid">
+        <div class="row g-4 mt-4">
             <div class="col-md-4">
                 <div class="card content-card">
                     <h5 class="card-title">Importante, novedoso</h5>
@@ -220,8 +241,57 @@
             </div>
         </div>
 
-        <div class="section-bar mt-4">
-            <h5>Enlaces a Centros del Sistema</h5>
+        <div class="section-bar mt-1">
+            <a class="section-bar-link" href="#">
+                <img src="{{ asset('img/links/catedes.png') }}" alt="CATEDES Logo" title="CATEDES">
+            </a>
+            <a class="section-bar-link" href="#">
+                <img src="{{ asset('img/links/cea.png') }}" alt="CEA Logo" title="CEA">
+            </a>
+            <a class="section-bar-link" href="#">
+                <img src="{{ asset('img/links/ceac.png') }}" alt="CEAC Logo" title="CEAC">
+            </a>
+            <a class="section-bar-link" href="#">
+                <img src="{{ asset('img/links/ceaden.png') }}" alt="CEADEN Logo" title="CEADEN">
+            </a>
+            <a class="section-bar-link" href="#">
+                <img src="{{ asset('img/links/cenais.png') }}" alt="CENAIS Logo" title="CENAIS">
+            </a>
+            <a class="section-bar-link" href="#">
+                <img src="{{ asset('img/links/centis.png') }}" alt="CENTIS Logo" title="CENTIS">
+            </a>
+            <a class="section-bar-link" href="#">
+                <img src="{{ asset('img/links/ciac.png') }}" alt="CIAC Logo" title="CIAC">
+            </a>
+            <a class="section-bar-link" href="#">
+                <img src="{{ asset('img/links/cies.png') }}" alt="CIES Logo" title="CIES">
+            </a>
+            <a class="section-bar-link" href="#">
+                <img src="{{ asset('img/links/cphr.png') }}" alt="CPHR Logo" title="CPHR">
+            </a>
+            <a class="section-bar-link" href="#">
+                <img src="{{ asset('img/links/cubaenergia.png') }}" alt="CUBAENERGIA Logo" title="CUBAENERGIA">
+            </a>
+            <a class="section-bar-link" href="#">
+                <img src="{{ asset('img/links/icimaf.png') }}" alt="ICIMAF Logo" title="ICIMAF">
+            </a>
+            <a class="section-bar-link" href="#">
+                <img src="{{ asset('img/links/idict.png') }}" alt="IDICT Logo" title="IDICT">
+            </a>
+        </div>
+        <div class="section-bar mt-1">
+            <a class="section-bar-link" href="#">
+                <img src="{{ asset('img/links/logo-arcal.png') }}" alt="ARCAL Logo" title="ARCAL">
+            </a>
+            <a class="section-bar-link" href="#">
+                <img src="{{ asset('img/links/logo-citma.jpg') }}" alt="CITMA Logo" title="CITMA">
+            </a>
+            <a class="section-bar-link" href="#">
+                <img src="{{ asset('img/links/minsap-logo.jpg') }}" alt="MINSAP Logo" title="MINSAP">
+            </a>
+            <a class="section-bar-link" href="#">
+                <img src="{{ asset('img/links/oiea.jpg') }}" alt="OIEA Logo" title="OIEA">
+            </a>
         </div>
     </div>
 
