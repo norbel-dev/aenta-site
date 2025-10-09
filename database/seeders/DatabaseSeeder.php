@@ -37,29 +37,31 @@ class DatabaseSeeder extends Seeder
         $publisher = Role::create(['name' => 'publisher']);
         $guest = Role::create(['name' => 'guest']);
 
-        Permission::create(['name' => 'dashboard'])->syncRoles([$superadmin, $admin, $publisher]);
+        Permission::create(['name' => 'dashboard'])->syncRoles([$superadmin, $admin, $publisher, $guest]);
+        Permission::create(['name' => 'publications'])->syncRoles([$superadmin, $admin, $publisher, $guest]);
+        Permission::create(['name' => 'advanced'])->syncRoles([$superadmin, $admin]);
 
-        Permission::create(['name' => 'admin.articles.index'])->syncRoles([$superadmin, $admin, $publisher]);
+        Permission::create(['name' => 'admin.articles'])->syncRoles([$superadmin, $admin, $publisher]);
         Permission::create(['name' => 'admin.articles.create'])->syncRoles([$superadmin, $admin, $publisher]);
         Permission::create(['name' => 'admin.articles.edit'])->syncRoles([$superadmin, $admin, $publisher]);
         Permission::create(['name' => 'admin.articles.destroy'])->syncRoles([$superadmin, $admin]);
 
-        Permission::create(['name' => 'admin.events.index'])->syncRoles([$superadmin, $admin, $publisher]);
+        Permission::create(['name' => 'admin.events'])->syncRoles([$superadmin, $admin, $publisher]);
         Permission::create(['name' => 'admin.events.create'])->syncRoles([$superadmin, $admin, $publisher]);
         Permission::create(['name' => 'admin.events.edit'])->syncRoles([$superadmin, $admin, $publisher]);
         Permission::create(['name' => 'admin.events.destroy'])->syncRoles([$superadmin, $admin]);
 
-        Permission::create(['name' => 'admin.news.index'])->syncRoles([$superadmin, $admin, $publisher]);
+        Permission::create(['name' => 'admin.news'])->syncRoles([$superadmin, $admin, $publisher]);
         Permission::create(['name' => 'admin.news.create'])->syncRoles([$superadmin, $admin, $publisher]);
         Permission::create(['name' => 'admin.news.edit'])->syncRoles([$superadmin, $admin, $publisher]);
         Permission::create(['name' => 'admin.news.destroy'])->syncRoles([$superadmin, $admin]);
 
-        Permission::create(['name' => 'admin.centers.index'])->syncRoles([$superadmin, $admin]);
+        Permission::create(['name' => 'admin.centers'])->syncRoles([$superadmin, $admin]);
         Permission::create(['name' => 'admin.centers.create'])->syncRoles([$superadmin, $admin]);
         Permission::create(['name' => 'admin.centers.edit'])->syncRoles([$superadmin, $admin]);
         Permission::create(['name' => 'admin.centers.destroy'])->syncRoles([$superadmin, $admin]);
 
-        Permission::create(['name' => 'admin.users.index'])->syncRoles([$superadmin, $admin]);
+        Permission::create(['name' => 'admin.users'])->syncRoles([$superadmin, $admin]);
         Permission::create(['name' => 'admin.users.create'])->syncRoles([$superadmin, $admin]);
         Permission::create(['name' => 'admin.users.edit'])->syncRoles([$superadmin, $admin]);
         Permission::create(['name' => 'admin.users.destroy'])->syncRoles([$superadmin, $admin]);
@@ -76,7 +78,20 @@ class DatabaseSeeder extends Seeder
             'current_team_id' => null,
         ]);
 
+        User::create([
+            'name' => 'Invitado',
+            'email' => 'norbel@aenta.cu',
+            'email_verified_at' => now(),
+            'password' => bcrypt('L0tt3ry34*Aent@Site'), // password
+            'two_factor_secret' => null,
+            'two_factor_recovery_codes' => null,
+            'remember_token' => Str::random(10),
+            'profile_photo_path' => null,
+            'current_team_id' => null,
+        ]);
+
         User::find(1)->roles()->sync($superadmin);
+        User::find(2)->roles()->sync($guest);
 
         $this->CreateArticles();
         $this->CreateCenters();

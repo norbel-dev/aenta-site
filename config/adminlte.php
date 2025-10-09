@@ -327,36 +327,48 @@ return [
         //     'label' => 4,
         //     'label_color' => 'success',
         // ],
-        ['header' => 'publications'],
+        [
+            'header' => 'publications',
+            'can' => 'publications'
+        ],
         [
             'text' => 'news',
             'url' => 'admin/news',
+            'can' => 'admin.news',
             'icon' => 'fas fa-fw fa-user',
         ],
         [
             'text' => 'events',
             'url' => 'admin/events',
+            'can' => 'admin.events',
             'icon' => 'fas fa-fw fa-lock',
         ],
         [
             'text' => 'articles',
             'url' => 'admin/articles',
+            'can' => 'admin.articles',
             'icon' => 'fas fa-fw fa-lock',
         ],
-        ['header' => 'advanced'],
+        [
+            'header' => 'advanced',
+            'can' => 'advanced'
+        ],
         [
             'text' => 'centers',
             'url' => 'admin/centers',
+            'can' => 'admin.centers',
             'icon' => 'fas fa-fw fa-lock',
         ],
         // [
         //     'text' => 'logs',
-        //     'url' => '#',
+        //     'url' => 'admin/logs',
+        //     'can' => 'admin.logs',
         //     'icon' => 'fas fa-fw fa-lock',
         // ],
         // [
         //     'text' => 'log_access',
-        //     'url' => '#',
+        //     'url' => 'admin/log_access',
+        //     'can' => 'admin.log_access',
         //     'icon' => 'fas fa-fw fa-lock',
         // ],
         // [
