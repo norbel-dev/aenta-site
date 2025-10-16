@@ -9,8 +9,10 @@
 @section('content')
 <div class="card">
     <div class="card-body">
-        <a href="{{ route('admin.centers.create') }}" class="btn btn-primary mb-3">Add Center</a>
-        <table class="table table-bordered table-striped">
+        @can('admin.centers.create')
+            <a href="{{ route('admin.centers.create') }}" class="btn btn-primary mb-3">Add Center</a>
+        @endcan
+        <table class="table table-bordered table-striped table-responsive">
             <thead>
                 <tr>
                     <th>Name</th>
@@ -26,12 +28,16 @@
                     <td>{{ $center->contact }}</td>
                     <td>{{ $center->address }}</td>
                     <td>
-                        <a href="{{ route('admin.centers.edit', $center) }}" class="btn btn-warning btn-sm">Edit</a>
-                        <form action="{{ route('admin.centers.destroy', $center) }}" method="POST" style="display:inline-block;">
-                            @csrf @method('DELETE')
-                            <button type="submit" class="btn btn-danger btn-sm"
-                                onclick="return confirm('Delete this center?')">Delete</button>
-                        </form>
+                        @can('admin.centers.edit')
+                            <a href="{{ route('admin.centers.edit', $center) }}" class="btn btn-warning btn-sm">Edit</a>
+                        @endcan
+                        @can('admin.centers.destroy')
+                            <form action="{{ route('admin.centers.destroy', $center) }}" method="POST" style="display:inline-block;">
+                                @csrf @method('DELETE')
+                                <button type="submit" class="btn btn-danger btn-sm"
+                                    onclick="return confirm('Delete this center?')">Delete</button>
+                            </form>
+                        @endcan
                     </td>
                 </tr>
             @endforeach

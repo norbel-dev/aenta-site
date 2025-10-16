@@ -1,15 +1,15 @@
 @extends('adminlte::page')
 
-@section('title', 'Create News')
+@section('title', 'Create Link')
 
 @section('content_header')
-    <h1>Create News</h1>
+    <h1>Create Link</h1>
 @endsection
 
 @section('content')
 <div class="card">
     <div class="card-body">
-        <form action="{{ route('admin.news.store') }}" method="POST" enctype="multipart/form-data">
+        <form action="{{ route('admin.links.store') }}" method="POST" enctype="multipart/form-data">
             @csrf
             <div class="form-group mb-3">
                 <label for="title">Title</label>
@@ -18,13 +18,13 @@
             </div>
 
             <div class="form-group mb-3">
-                <label for="content">Content</label>
-                <textarea name="content" class="form-control" rows="4">{{ old('content') }}</textarea>
+                <label for="link">Link</label>
+                <textarea name="link" class="form-control" rows="4">{{ old('link') }}</textarea>
             </div>
 
             <div class="form-group mb-3">
                 <label for="image">Image</label><br>
-                {{-- @if($news->image) --}}
+                {{-- @if($links->image) --}}
                     <img src="{{ asset('storage/') }}" alt="New Image" class="img-thumbnail mb-2" width="200">
                 {{-- @endif --}}
                 <input type="file" name="image" class="form-control">
@@ -41,14 +41,8 @@
                 </select>
             </div>
 
-            <div class="form-group mb-3">
-                <label for="published_at">Published at</label>
-                <input type="date" name="published_at" class="form-control"
-                       value="{{ old('published_at') }}" required>
-            </div>
-
             <button type="submit" class="btn btn-success">Create</button>
-            <a href="{{ route('admin.news.index') }}" class="btn btn-secondary">Cancel</a>
+            <a href="{{ route('admin.links.index') }}" class="btn btn-secondary">Cancel</a>
         </form>
     </div>
 </div>

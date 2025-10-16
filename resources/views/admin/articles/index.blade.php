@@ -9,8 +9,10 @@
 @section('content')
 <div class="card">
     <div class="card-body">
-        <a href="{{ route('admin.articles.create') }}" class="btn btn-primary mb-3">Add Article</a>
-        <table class="table table-bordered table-striped">
+        @can('admin.articles.create')
+            <a href="{{ route('admin.articles.create') }}" class="btn btn-primary mb-3">Add Article</a>
+        @endcan
+        <table class="table table-bordered table-striped table-responsive">
             <thead>
                 <tr>
                     <th>Title</th>
@@ -27,22 +29,19 @@
                     <td>{{ $article->author }}</td>
                     <td>
                         <span class="badge bg-{{ $article->status->color() }}">{{ $article->status->label() }}</span>
-                        {{-- @if($article->status == $status->EDIT_DRAFT)
-                            <span class="badge bg-success">Published</span>
-                        @elseif($article->status == 'draft')
-                            <span class="badge bg-secondary">Draft</span>
-                        @else
-                            <span class="badge bg-danger">Cancelled</span>
-                        @endif --}}
                     </td>
                     <td>{{ $article->published_at ?? '-' }}</td>
                     <td>
-                        <a href="{{ route('admin.articles.edit', $article) }}" class="btn btn-warning btn-sm">Edit</a>
-                        <form action="{{ route('admin.articles.destroy', $article) }}" method="POST" style="display:inline-block;">
-                            @csrf @method('DELETE')
-                            <button type="submit" class="btn btn-danger btn-sm"
-                                onclick="return confirm('Delete this article?')">Delete</button>
-                        </form>
+                        @can('admin.articles.edit')
+                            <a href="{{ route('admin.articles.edit', $article) }}" class="btn btn-warning btn-sm">Edit</a>
+                        @endcan
+                        @can('admin.articles.destroy')
+                            <form action="{{ route('admin.articles.destroy', $article) }}" method="POST" style="display:inline-block;">
+                                @csrf @method('DELETE')
+                                <button type="submit" class="btn btn-danger btn-sm"
+                                    onclick="return confirm('Delete this article?')">Delete</button>
+                            </form>
+                        @endcan
                     </td>
                 </tr>
             @endforeach

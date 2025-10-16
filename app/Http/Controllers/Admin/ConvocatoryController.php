@@ -2,65 +2,63 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Enums\Status;
 use App\Http\Controllers\Controller;
 use App\Models\Convocatory;
 use Illuminate\Http\Request;
+use Illuminate\Validation\Rules\Enum;
 
 class ConvocatoryController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
     public function index()
     {
-        //
+        $convocatories = Convocatory::where('status', Status::EDIT_PUBLISHED)->latest()->get();
+        return view('admin.convocatories.index', compact('convocatories'));
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
     public function create()
     {
-        //
+        return view('admin.convocatories.create');
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
     public function store(Request $request)
     {
-        //
+        $request->validate([
+            'title' => 'required',
+            'date' => 'required|date',
+            'date_end' => 'nullable|date|after_or_equal:date',
+            'status' => 'required', new Enum(Status::class),
+        ]);
+
+        Convocatory::create($request->all());
+        return redirect()->route('admin.convocatories.index')->with('success', 'Convocatory created successfully.');
     }
 
-    /**
-     * Display the specified resource.
-     */
     public function show(Convocatory $convocatory)
     {
-        //
+        return view('admin.convocatories.show', compact('convocatory'));
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     */
     public function edit(Convocatory $convocatory)
     {
-        //
+        return view('admin.convocatories.edit', compact('convocatory'));
     }
 
-    /**
-     * Update the specified resource in storage.
-     */
     public function update(Request $request, Convocatory $convocatory)
     {
-        //
+        $request->validate([
+            'title' => 'required',
+            'date' => 'required|date',
+            'date_end' => 'nullable|date|after_or_equal:date',
+            'status' => 'required', new Enum(Status::class),
+        ]);
+        $convocatory->update($request->all());
+        return redirect()->route('admin.convocatories.index')->with('success', 'Convocatory updated successfully.');
     }
 
-    /**
-     * Remove the specified resource from storage.
-     */
     public function destroy(Convocatory $convocatory)
     {
-        //
+        $convocatory->delete();
+        return redirect()->route('admin.convocatories.index')->with('success', 'Convocatory deleted successfully.');
     }
 }

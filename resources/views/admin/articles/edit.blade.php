@@ -45,11 +45,6 @@
 
             <div class="form-group mb-3">
                 <label for="status">Status</label>
-                {{-- <select name="status" class="form-control">
-                    <option value={{App\Enums\Status::EDIT_DRAFT}} {{ old('status', $article->status) == App\Enums\Status::EDIT_DRAFT ? 'selected' : '' }}>Draft</option>
-                    <option value={{App\Enums\Status::EDIT_PUPLISHED}} {{ old('status', $article->status) == App\Enums\Status::EDIT_PUPLISHED ? 'selected' : '' }}>Published</option>
-                    <option value={{App\Enums\Status::EDIT_FINISHED}}{{ old('status', $article->status) == App\Enums\Status::EDIT_FINISHED ? 'selected' : '' }}>Cancelled</option>
-                </select> --}}
                 <select name="status" class="form-control">
                     @foreach(App\Enums\Status::cases() as $status)
                         <option value="{{ $status->value }}" @selected(old('status') == $status->value)>

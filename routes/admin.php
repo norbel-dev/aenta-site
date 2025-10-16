@@ -12,8 +12,8 @@ use App\Http\Controllers\Admin\NewsController;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Http\Request;
 
-$r = Request::capture();
-$can = str_replace("/", ".", $r->path());
+$request = Request::capture();
+$can = str_replace("/", ".", $request->path());
 Route::get('/', [AdminController::class, 'index']);
 Route::resource('articles', ArticleController::class)->middleware('can:'.$can);
 Route::resource('centers', CenterController::class)->middleware('can:'.$can);//->only(['index', 'create', 'edit', 'update']);

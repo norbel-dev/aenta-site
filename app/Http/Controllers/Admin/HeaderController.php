@@ -2,65 +2,65 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Enums\Status;
 use App\Http\Controllers\Controller;
 use App\Models\Header;
 use Illuminate\Http\Request;
+use Illuminate\Validation\Rules\Enum;
 
 class HeaderController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
     public function index()
     {
-        //
+        $headers = Header::where('status', Status::EDIT_PUBLISHED)->latest()->get();
+        return view('admin.headers.index', compact('headers'));
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
     public function create()
     {
-        //
+        return view('admin.headers.create');
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
     public function store(Request $request)
     {
-        //
+        $request->validate([
+            'title' => 'required',
+            'content' => 'required',
+            'image' => 'required',
+            'status' => 'required', new Enum(Status::class),
+            'date' => 'required|date',
+        ]);
+
+        Header::create($request->all());
+        return redirect()->route('admin.headers.index')->with('success', 'Header created successfully.');
     }
 
-    /**
-     * Display the specified resource.
-     */
     public function show(Header $header)
     {
-        //
+        return view('admin.headers.show', compact('header'));
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     */
     public function edit(Header $header)
     {
-        //
+        return view('admin.headers.edit', compact('header'));
     }
 
-    /**
-     * Update the specified resource in storage.
-     */
     public function update(Request $request, Header $header)
     {
-        //
+        $request->validate([
+            'title' => 'required',
+            'content' => 'required',
+            'image' => 'required',
+            'status' => 'required', new Enum(Status::class),
+            'date' => 'required|date',
+        ]);
+        $header->update($request->all());
+        return redirect()->route('admin.headers.index')->with('success', 'Header updated successfully.');
     }
 
-    /**
-     * Remove the specified resource from storage.
-     */
     public function destroy(Header $header)
     {
-        //
+        $header->delete();
+        return redirect()->route('admin.headers.index')->with('success', 'Header deleted successfully.');
     }
 }

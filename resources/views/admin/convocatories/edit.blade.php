@@ -1,15 +1,15 @@
 @extends('adminlte::page')
 
-@section('title', 'Edit News')
+@section('title', 'Edit Convocatory')
 
 @section('content_header')
-    <h1>Edit News</h1>
+    <h1>Edit Convocatory</h1>
 @endsection
 
 @section('content')
 <div class="card">
     <div class="card-body">
-        <form action="{{ route('admin.news.update', $news) }}" method="POST" enctype="multipart/form-data">
+        <form action="{{ route('admin.convocatories.update', $convocatory) }}" method="POST" enctype="multipart/form-data">
             @csrf
             @method('PUT')
 
@@ -20,16 +20,26 @@
             </div>
 
             <div class="form-group mb-3">
-                <label for="content">Content</label>
-                <textarea name="content" class="form-control" rows="4">{{ old('content') }}</textarea>
+                <label for="media">Media</label>
+                <select name="media" class="form-control">
+                    @foreach(App\Enums\Media::cases() as $media)
+                        <option value="{{ $media->value }}" @selected(old('media') == $media->value)>
+                            {{ $media->label() }}
+                        </option>
+                    @endforeach
+                </select>
             </div>
 
             <div class="form-group mb-3">
-                <label for="image">Image</label><br>
-                {{-- @if($news->image) --}}
-                    <img src="{{ asset('storage/') }}" alt="New Image" class="img-thumbnail mb-2" width="200">
-                {{-- @endif --}}
-                <input type="file" name="image" class="form-control">
+                <label for="date">Date</label>
+                <input type="date" name="date" class="form-control"
+                       value="{{ old('date') }}" required>
+            </div>
+
+            <div class="form-group mb-3">
+                <label for="date_end">Date end (optional)</label>
+                <input type="date" name="date_end" class="form-control"
+                       value="{{ old('date_end') }}" required>
             </div>
 
             <div class="form-group mb-3">
@@ -43,14 +53,8 @@
                 </select>
             </div>
 
-            <div class="form-group mb-3">
-                <label for="published_at">Published at</label>
-                <input type="date" name="published_at" class="form-control"
-                       value="{{ old('published_at') }}" required>
-            </div>
-
             <button type="submit" class="btn btn-success">Update</button>
-            <a href="{{ route('admin.news.index') }}" class="btn btn-secondary">Cancel</a>
+            <a href="{{ route('admin.convocatories.index') }}" class="btn btn-secondary">Cancel</a>
         </form>
     </div>
 </div>

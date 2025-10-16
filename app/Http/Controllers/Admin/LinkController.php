@@ -2,34 +2,36 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Enums\Status;
 use App\Http\Controllers\Controller;
 use App\Models\Link;
 use Illuminate\Http\Request;
+use Illuminate\Validation\Rules\Enum;
 
 class LinkController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
     public function index()
     {
-        //
+        $links = Link::where('status', Status::EDIT_PUBLISHED)->latest()->get();
+        return view('admin.links.index', compact('links'));
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
     public function create()
     {
-        //
+        return view('admin.links.create');
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
     public function store(Request $request)
     {
-        //
+        $request->validate([
+            'title' => 'required',
+            'link' => 'required',
+            'image' => 'required',
+            'status' => 'required', new Enum(Status::class),
+        ]);
+
+        Link::create($request->all());
+        return redirect()->route('admin.links.index')->with('success', 'Link created successfully.');
     }
 
     /**
@@ -37,7 +39,7 @@ class LinkController extends Controller
      */
     public function show(Link $link)
     {
-        //
+        return view('admin.links.show', compact('link'));
     }
 
     /**
@@ -45,7 +47,7 @@ class LinkController extends Controller
      */
     public function edit(Link $link)
     {
-        //
+        return view('admin.links.edit', compact('link'));
     }
 
     /**
@@ -53,7 +55,14 @@ class LinkController extends Controller
      */
     public function update(Request $request, Link $link)
     {
-        //
+        $request->validate([
+            'title' => 'required',
+            'link' => 'required',
+            'image' => 'required',
+            'status' => 'required', new Enum(Status::class),
+        ]);
+        $link->update($request->all());
+        return redirect()->route('admin.links.index')->with('success', 'Link updated successfully.');
     }
 
     /**
@@ -61,6 +70,7 @@ class LinkController extends Controller
      */
     public function destroy(Link $link)
     {
-        //
+        $link->delete();
+        return redirect()->route('admin.links.index')->with('success', 'Link deleted successfully.');
     }
 }

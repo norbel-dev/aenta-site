@@ -9,8 +9,10 @@
 @section('content')
 <div class="card">
     <div class="card-body">
-        <a href="{{ route('admin.events.create') }}" class="btn btn-primary mb-3">Add Event</a>
-        <table class="table table-bordered table-striped">
+        @can('admin.events.create')
+            <a href="{{ route('admin.events.create') }}" class="btn btn-primary mb-3">Add Event</a>
+        @endcan
+        <table class="table table-bordered table-striped table-responsive">
             <thead>
                 <tr>
                     <th>Title</th>
@@ -28,21 +30,18 @@
                     <td>{{ $event->event_date_end ?? '-' }}</td>
                     <td>
                         <span class="badge bg-{{ $event->status->color() }}">{{ $event->status->label() }}</span>
-                        {{-- @if($event->status == $status->EDIT_DRAFT)
-                            <span class="badge bg-success">Published</span>
-                        @elseif($event->status == 'draft')
-                            <span class="badge bg-secondary">Draft</span>
-                        @else
-                            <span class="badge bg-danger">Cancelled</span>
-                        @endif --}}
                     </td>
                     <td>
-                        <a href="{{ route('admin.events.edit', $event) }}" class="btn btn-warning btn-sm">Edit</a>
-                        <form action="{{ route('admin.events.destroy', $event) }}" method="POST" style="display:inline-block;">
-                            @csrf @method('DELETE')
-                            <button type="submit" class="btn btn-danger btn-sm"
-                                onclick="return confirm('Delete this event?')">Delete</button>
-                        </form>
+                        @can('admin.events.edit')
+                            <a href="{{ route('admin.events.edit', $event) }}" class="btn btn-warning btn-sm">Edit</a>
+                        @endcan
+                        @can('admin.events.destroy')
+                            <form action="{{ route('admin.events.destroy', $event) }}" method="POST" style="display:inline-block;">
+                                @csrf @method('DELETE')
+                                <button type="submit" class="btn btn-danger btn-sm"
+                                    onclick="return confirm('Delete this event?')">Delete</button>
+                            </form>
+                        @endcan
                     </td>
                 </tr>
             @endforeach

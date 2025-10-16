@@ -1,15 +1,15 @@
 @extends('adminlte::page')
 
-@section('title', 'Create News')
+@section('title', 'Create Header')
 
 @section('content_header')
-    <h1>Create News</h1>
+    <h1>Create Header</h1>
 @endsection
 
 @section('content')
 <div class="card">
     <div class="card-body">
-        <form action="{{ route('admin.news.store') }}" method="POST" enctype="multipart/form-data">
+        <form action="{{ route('admin.headers.store') }}" method="POST" enctype="multipart/form-data">
             @csrf
             <div class="form-group mb-3">
                 <label for="title">Title</label>
@@ -24,7 +24,7 @@
 
             <div class="form-group mb-3">
                 <label for="image">Image</label><br>
-                {{-- @if($news->image) --}}
+                {{-- @if($headers->image) --}}
                     <img src="{{ asset('storage/') }}" alt="New Image" class="img-thumbnail mb-2" width="200">
                 {{-- @endif --}}
                 <input type="file" name="image" class="form-control">
@@ -48,7 +48,7 @@
             </div>
 
             <button type="submit" class="btn btn-success">Create</button>
-            <a href="{{ route('admin.news.index') }}" class="btn btn-secondary">Cancel</a>
+            <a href="{{ route('admin.headers.index') }}" class="btn btn-secondary">Cancel</a>
         </form>
     </div>
 </div>
