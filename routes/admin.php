@@ -28,8 +28,4 @@ Route::resource('links', LinkController::class)->middleware('can:'.$can);
 Route::resource('logs', LogAccessController::class)->middleware('can:'.$can);
 Route::resource('news', NewsController::class)->middleware('can:'.$can);
 Route::resource('users', UserController::class)->middleware('can:'.$can);
-// Route::middleware('can:'.$can)->group(function () {
-//     Fortify::registerView(function () {
-//         return view('auth.register');
-//     });
-// });
+

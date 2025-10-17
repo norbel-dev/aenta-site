@@ -32,10 +32,10 @@ class DatabaseSeeder extends Seeder
         // User::find(1)->roles()->sync($superadmin);
         // return;
 
-        $superadmin = Role::create(['name' => 'super_admin']);
-        $admin = Role::create(['name' => 'admin']);
-        $publisher = Role::create(['name' => 'publisher']);
-        $guest = Role::create(['name' => 'guest']);
+        $superadmin = Role::create(['name' => 'super_admin', 'guard_name' => 'web', 'description' => 'Super Administrator']);
+        $admin = Role::create(['name' => 'admin', 'guard_name' => 'web', 'description' => 'Administrator']);
+        $publisher = Role::create(['name' => 'publisher', 'guard_name' => 'web', 'description' => 'Publisher']);
+        $guest = Role::create(['name' => 'guest', 'guard_name' => 'web', 'description' => 'Guest']);
 
         Permission::create(['name' => 'dashboard'])->syncRoles([$superadmin, $admin, $publisher, $guest]);
         Permission::create(['name' => 'publications'])->syncRoles([$superadmin, $admin, $publisher, $guest]);
@@ -62,10 +62,30 @@ class DatabaseSeeder extends Seeder
         Permission::create(['name' => 'admin.centers.destroy'])->syncRoles([$superadmin, $admin]);
 
         Permission::create(['name' => 'admin.users'])->syncRoles([$superadmin, $admin]);
-        Permission::create(['name' => 'admin.users.create'])->syncRoles([$superadmin, $admin]);
+        Permission::create(['name' => 'admin.register'])->syncRoles([$superadmin, $admin]);
         Permission::create(['name' => 'admin.users.edit'])->syncRoles([$superadmin, $admin]);
         Permission::create(['name' => 'admin.users.destroy'])->syncRoles([$superadmin, $admin]);
 
+        Permission::create(['name' => 'admin.convocatories'])->syncRoles([$superadmin, $admin]);
+        Permission::create(['name' => 'admin.convocatories.create'])->syncRoles([$superadmin, $admin]);
+        Permission::create(['name' => 'admin.convocatories.edit'])->syncRoles([$superadmin, $admin]);
+        Permission::create(['name' => 'admin.convocatories.destroy'])->syncRoles([$superadmin, $admin]);
+
+        Permission::create(['name' => 'admin.headers'])->syncRoles([$superadmin, $admin]);
+        Permission::create(['name' => 'admin.headers.create'])->syncRoles([$superadmin, $admin]);
+        Permission::create(['name' => 'admin.headers.edit'])->syncRoles([$superadmin, $admin]);
+        Permission::create(['name' => 'admin.headers.destroy'])->syncRoles([$superadmin, $admin]);
+
+        Permission::create(['name' => 'admin.links'])->syncRoles([$superadmin, $admin]);
+        Permission::create(['name' => 'admin.links.create'])->syncRoles([$superadmin, $admin]);
+        Permission::create(['name' => 'admin.links.edit'])->syncRoles([$superadmin, $admin]);
+        Permission::create(['name' => 'admin.links.destroy'])->syncRoles([$superadmin, $admin]);
+
+        Permission::create(['name' => 'admin.logs'])->syncRoles([$superadmin]);
+        Permission::create(['name' => 'admin.logs.destroy'])->syncRoles([$superadmin]);
+
+        Permission::create(['name' => 'admin.log_access'])->syncRoles([$superadmin]);
+        Permission::create(['name' => 'admin.log_access.destroy'])->syncRoles([$superadmin]);
         User::create([
             'name' => 'Norbel González Peña',
             'email' => 'norbelkots@gmail.com',
