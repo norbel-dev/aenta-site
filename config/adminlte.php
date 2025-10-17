@@ -332,10 +332,16 @@ return [
             'can' => 'publications'
         ],
         [
-            'text' => 'news',
-            'url' => 'admin/news',
-            'can' => 'admin.news',
-            'icon' => 'fas fa-fw fa-user',
+            'text' => 'articles',
+            'url' => 'admin/articles',
+            'can' => 'admin.articles',
+            'icon' => 'fas fa-fw fa-lock',
+        ],
+        [
+            'text' => 'convocatories',
+            'url' => 'admin/convocatories',
+            'can' => 'admin.convocatories',
+            'icon' => 'fas fa-fw fa-lock',
         ],
         [
             'text' => 'events',
@@ -344,11 +350,25 @@ return [
             'icon' => 'fas fa-fw fa-lock',
         ],
         [
-            'text' => 'articles',
-            'url' => 'admin/articles',
-            'can' => 'admin.articles',
+            'text' => 'headers',
+            'url' => 'admin/headers',
+            'can' => 'admin.headers',
             'icon' => 'fas fa-fw fa-lock',
         ],
+        [
+            'text' => 'links',
+            'url' => 'admin/links',
+            'can' => 'admin.links',
+            'icon' => 'fas fa-fw fa-lock',
+        ],
+        [
+            'text' => 'news',
+            'url' => 'admin/news',
+            'can' => 'admin.news',
+            'icon' => 'fas fa-fw fa-user',
+        ],
+
+
         [
             'header' => 'advanced',
             'can' => 'advanced'
@@ -359,18 +379,24 @@ return [
             'can' => 'admin.centers',
             'icon' => 'fas fa-fw fa-lock',
         ],
-        // [
-        //     'text' => 'logs',
-        //     'url' => 'admin/logs',
-        //     'can' => 'admin.logs',
-        //     'icon' => 'fas fa-fw fa-lock',
-        // ],
-        // [
-        //     'text' => 'log_access',
-        //     'url' => 'admin/log_access',
-        //     'can' => 'admin.log_access',
-        //     'icon' => 'fas fa-fw fa-lock',
-        // ],
+        [
+            'text' => 'logs',
+            'url' => 'admin/logs',
+            'can' => 'admin.logs',
+            'icon' => 'fas fa-fw fa-lock',
+        ],
+        [
+            'text' => 'log_access',
+            'url' => 'admin/log_access',
+            'can' => 'admin.log_access',
+            'icon' => 'fas fa-fw fa-lock',
+        ],
+        [
+            'text' => 'users',
+            'url' => 'admin/users',
+            'can' => 'admin.users',
+            'icon' => 'fas fa-fw fa-lock',
+        ],
         // [
         //     'text' => 'multilevel',
         //     'icon' => 'fas fa-fw fa-share',
