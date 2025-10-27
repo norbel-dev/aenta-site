@@ -15,11 +15,13 @@ return new class extends Migration
         Schema::create('events', function (Blueprint $table) {
             $table->id();
             $table->string('title');
+            $table->string('slug');
             $table->text('description')->nullable();
             $table->date('event_date');
             $table->date('event_date_end')->nullable();
             $table->string('location')->nullable();
             $table->string('image')->nullable();
+            $table->string('thumbnail')->nullable();
             $table->enum('status', Status::cases())->default(status::EDIT_DRAFT);
             $table->timestamps();
         });

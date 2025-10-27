@@ -21,4 +21,9 @@ class Header extends Model
             'status' => Status::class,
         ];
     }
+
+    public function getRouteKeyName()
+    {
+        return 'slug';
+    }
 }

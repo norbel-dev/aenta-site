@@ -9,6 +9,7 @@ use App\Models\Event;
 use App\Models\News;
 use App\Models\User;
 use Carbon\Carbon;
+use Faker\Factory;
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Str;
@@ -120,31 +121,43 @@ class DatabaseSeeder extends Seeder
     }
 
     function CreateNews(){
+        $fact = Factory::create();
+        $title1 = $fact->sentence();
+        $title2 = $fact->sentence();
+        $title3 = $fact->sentence();
         News::create([
-            'title' => 'Company launches new product line',
-            'content' => 'We are proud to announce the release of our new eco-friendly products.',
+            'title' => $title1,
+            'slug' => Str::slug($title1),
+            'content' => $fact->paragraphs(3, true),
             'status' => Status::EDIT_PUBLISHED,
             'published_at' => Carbon::now()->subDays(2),
         ]);
 
         News::create([
-            'title' => 'Partnership with global brand',
-            'content' => 'Our company has partnered with a global leader to expand our reach.',
+            'title' => $title2,
+            'slug' => Str::slug($title2),
+            'content' => $fact->paragraphs(3, true),
             'status' => Status::EDIT_DRAFT,
         ]);
 
         News::create([
-            'title' => 'Award for best innovation',
-            'content' => 'We received recognition at the National Innovation Awards.',
+            'title' => $title3,
+            'slug' => Str::slug($title3),
+            'content' => $fact->paragraphs(3, true),
             'status' => Status::EDIT_PUBLISHED,
             'published_at' => Carbon::now()->subDays(5),
         ]);
     }
 
     function CreateEvents(){
+        $fact = Factory::create();
+        $title1 = $fact->sentence();
+        $title2 = $fact->sentence();
+        $title3 = $fact->sentence();
         Event::create([
-            'title' => 'Annual Science Conference',
-            'description' => 'A three-day event covering the latest in scientific research.',
+            'title' => $title1,
+            'slug' => Str::slug($title1),
+            'description' => $fact->paragraphs(3, true),
             'event_date' => Carbon::now()->addDays(10),
             'event_date_end' => Carbon::now()->addDays(12),
             'location' => 'New York Convention Center',
@@ -152,16 +165,18 @@ class DatabaseSeeder extends Seeder
         ]);
 
         Event::create([
-            'title' => 'Tech Innovation Meetup',
-            'description' => 'One-day meetup to showcase innovative tech solutions.',
+            'title' => $title2,
+            'slug' => Str::slug($title2),
+            'description' => $fact->paragraphs(3, true),
             'event_date' => Carbon::now()->addDays(20),
             'location' => 'San Francisco Tech Hub',
             'status' => Status::EDIT_DRAFT,
         ]);
 
         Event::create([
-            'title' => 'Health Awareness Workshop',
-            'description' => 'Interactive workshop focusing on mental and physical health.',
+            'title' => $title3,
+            'slug' => Str::slug($title3),
+            'description' => $fact->paragraphs(3, true),
             'event_date' => Carbon::now()->subDays(5),
             'location' => 'Online',
             'status' => Status::EDIT_CANCELLED,
@@ -169,19 +184,24 @@ class DatabaseSeeder extends Seeder
     }
 
     function CreateArticles(){
+        $fact = Factory::create();
+        $title1 = $fact->sentence();
+        $title3 = $fact->sentence();
         Article::create([
-            'title' => 'Climate Change and Renewable Energy',
-            'abstract' => 'Exploring how renewable energy can help mitigate climate change.',
-            'content' => 'Full scientific content goes here...',
+            'title' => $title1,
+            'slug' => Str::slug($title1),
+            'abstract' => $fact->paragraph(),
+            'content' => $fact->paragraphs(3, true),
             'author' => 'Dr. John Smith',
             'status' => Status::EDIT_PUBLISHED,
             'published_at' => Carbon::now()->subDays(3),
         ]);
 
         Article::create([
-            'title' => 'Artificial Intelligence in Healthcare',
-            'abstract' => 'AI is transforming diagnostics and patient care.',
-            'content' => 'Full article body with references...',
+            'title' => $title3,
+            'slug' => Str::slug($title3),
+            'abstract' => $fact->paragraph(),
+            'content' => $fact->paragraphs(3, true),
             'author' => 'Dr. Jane Doe',
             'status' => Status::EDIT_PUBLISHED,
             'published_at' => Carbon::now()->subDays(7),

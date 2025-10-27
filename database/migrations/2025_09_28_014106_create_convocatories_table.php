@@ -16,6 +16,7 @@ return new class extends Migration
         Schema::create('convocatories', function (Blueprint $table) {
             $table->id();
             $table->string('title');
+            $table->string('slug');
             $table->enum('media', Media::cases())->default(Media::PDF);
             $table->date('date');
             $table->date('date_end')->nullable();

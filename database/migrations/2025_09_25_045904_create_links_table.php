@@ -15,7 +15,9 @@ return new class extends Migration
         Schema::create('links', function (Blueprint $table) {
             $table->id();
             $table->string('title');
+            $table->string('slug');
             $table->string('image');
+            $table->string('thumbnail')->nullable();
             $table->string('link');
             $table->enum('status', Status::cases())->default(status::EDIT_DRAFT);
             $table->timestamps();

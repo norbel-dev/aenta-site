@@ -15,10 +15,26 @@ use Illuminate\Support\Facades\Route;
 use Illuminate\Http\Request;
 use Laravel\Fortify\Fortify;
 
-$request = Request::capture();
-$can = str_replace("/", ".", $request->path());
-Route::get('/', [AdminController::class, 'index']);
 
+Route::get('/', [AdminController::class, 'index']);
+$request = Request::capture();
+//$path = ltrim($request->path(), '/');
+$shorts = explode('/', $request->path());
+$can = '';
+switch (count($shorts)) {
+    case 2:
+        $can = $shorts[0].'.'. $shorts[1];
+        break;
+    case 3:
+        $can = $shorts[0].'.'. $shorts[1].'.'. $shorts[2];
+        break;
+    case 4:
+        $can = $shorts[0].'.'. $shorts[1].'.'. $shorts[3];
+        break;
+    default:
+        $can = $shorts[0];
+        break;
+}
 Route::resource('articles', ArticleController::class)->middleware('can:'.$can);
 Route::resource('centers', CenterController::class)->middleware('can:'.$can);//->only(['index', 'create', 'edit', 'update']);
 Route::resource('convocatories', ConvocatoryController::class)->middleware('can:'.$can);

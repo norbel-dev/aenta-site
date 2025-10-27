@@ -15,8 +15,10 @@ return new class extends Migration
         Schema::create('headers', function (Blueprint $table) {
             $table->id();
             $table->string('title');
+            $table->string('slug');
             $table->text('content');
             $table->string('image');
+            $table->string('thumbnail')->nullable();
             $table->enum('status', Status::cases())->default(status::EDIT_DRAFT);
             $table->timestamp('published_at')->nullable();
             $table->timestamps();

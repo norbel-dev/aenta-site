@@ -20,4 +20,9 @@ class Link extends Model
             'status' => Status::class,
         ];
     }
+
+    public function getRouteKeyName()
+    {
+        return 'slug';
+    }
 }

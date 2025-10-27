@@ -21,10 +21,8 @@ class Convocatory extends Model
         'media'=> Media::class
     ];
 
-    // protected function casts(): array
-    // {
-    //     return [
-    //         'status' => Status::class,
-    //     ];
-    // }
+    public function getRouteKeyName()
+    {
+        return 'slug';
+    }
 }

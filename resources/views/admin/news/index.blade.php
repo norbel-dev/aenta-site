@@ -12,7 +12,7 @@
         @can('admin.news.create')
             <a href="{{ route('admin.news.create') }}" class="btn btn-primary mb-3">Add New</a>
         @endcan
-        <table class="table table-bordered table-striped table-responsive">
+        {{-- <table class="table table-bordered table-striped table-responsive">
             <thead>
                 <tr>
                     <th>Title</th>
@@ -25,7 +25,7 @@
             <tbody>
             @foreach($news as $item)
                 <tr>
-                    <td>{{ $item->title }}</td>
+                    <td><a href="{{route('admin.news.show', $item)}}">{{ $item->title }}</a></td>
                     <td>{{ $item->content }}</td>
                     <td>
                         <span class="badge bg-{{ $item->status->color() }}">{{ $item->status->label() }}</span>
@@ -46,7 +46,23 @@
                 </tr>
             @endforeach
             </tbody>
-        </table>
+        </table> --}}
+        @foreach($news as $noticia)
+            <div class="card mb-3 p-3">
+                <h4>{{ $noticia->titulo }}</h4>
+                @if($noticia->thumbnail)
+                    <img src="{{ asset('storage/'.$noticia->thumbnail) }}" title="{{ asset('storage/'.$noticia->thumbnail) }}" style="max-width: 200px;">
+                @endif
+                <p>{{ Str::limit($noticia->content, 200) }}</p>
+                <a href="{{ route('admin.news.edit', $noticia) }}" class="btn btn-sm btn-primary">Editar</a>
+
+                <form action="{{ route('admin.news.destroy', $noticia) }}" method="POST" style="display:inline;">
+                    @csrf
+                    @method('DELETE')
+                    <button class="btn btn-sm btn-danger" onclick="return confirm('¿Eliminar esta noticia?')">Eliminar</button>
+                </form>
+            </div>
+        @endforeach
     </div>
 </div>
 @endsection
