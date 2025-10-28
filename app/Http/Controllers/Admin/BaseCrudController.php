@@ -2,36 +2,44 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Http\Controllers\Controller;
+use Illuminate\Routing\Controller as BaseController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
 use App\Traits\HasImageUpload;
 
-abstract class BaseCrudController extends Controller
+abstract class BaseCrudController extends BaseController
 {
     use HasImageUpload;
 
-    /**
-     * Clase del modelo (definida en el controlador hijo).
-     */
     protected string $model;
 
-    /**
-     * Carpeta donde se guardarán las imágenes.
-     */
     protected string $folder;
 
-    /**
-     * Nombre de la vista base (por convención).
-     */
-    protected string $viewBase;
+    protected string $permissionPrefix;
 
-    // ---------- CRUD ----------
+    public function __construct()
+    {
+        $this->applyPermissionMiddleware();
+    }
+
+    protected function applyPermissionMiddleware(): void
+    {
+        if (!isset($this->permissionPrefix)) {
+            return;
+        }
+
+        $prefix = $this->permissionPrefix;
+
+        $this->middleware("can:{$prefix}")->only('index');
+        $this->middleware("can:{$prefix}.create")->only(['create', 'store']);
+        $this->middleware("can:{$prefix}.edit")->only(['edit', 'update']);
+        $this->middleware("can:{$prefix}.destroy")->only('destroy');
+    }
 
     public function create()
     {
         $item = new $this->model();
-        return view("admin.{$this->viewBase}.form", compact('item'));
+        return view("admin.{$this->folder}.form", compact('item'));
     }
 
     public function store(Request $request)
@@ -56,7 +64,7 @@ abstract class BaseCrudController extends Controller
     public function edit($id)
     {
         $item = $this->model::findOrFail($id);
-        return view("admin.{$this->viewBase}.form", compact('item'));
+        return view("admin.{$this->folder}.form", compact('item'));
     }
 
     public function update(Request $request, $id)

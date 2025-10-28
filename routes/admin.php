@@ -17,31 +17,13 @@ use Laravel\Fortify\Fortify;
 
 
 Route::get('/', [AdminController::class, 'index']);
-$request = Request::capture();
-//$path = ltrim($request->path(), '/');
-$shorts = explode('/', $request->path());
-$can = '';
-switch (count($shorts)) {
-    case 2:
-        $can = $shorts[0].'.'. $shorts[1];
-        break;
-    case 3:
-        $can = $shorts[0].'.'. $shorts[1].'.'. $shorts[2];
-        break;
-    case 4:
-        $can = $shorts[0].'.'. $shorts[1].'.'. $shorts[3];
-        break;
-    default:
-        $can = $shorts[0];
-        break;
-}
-Route::resource('articles', ArticleController::class)->middleware('can:'.$can);
-Route::resource('centers', CenterController::class)->middleware('can:'.$can);//->only(['index', 'create', 'edit', 'update']);
-Route::resource('convocatories', ConvocatoryController::class)->middleware('can:'.$can);
-Route::resource('events', EventController::class)->middleware('can:'.$can);
-Route::resource('headers', HeaderController::class)->middleware('can:'.$can);
-Route::resource('links', LinkController::class)->middleware('can:'.$can);
-Route::resource('logs', LogAccessController::class)->middleware('can:'.$can);
-Route::resource('news', NewsController::class)->middleware('can:'.$can);
-Route::resource('users', UserController::class)->middleware('can:'.$can);
+Route::resource('articles', ArticleController::class);
+Route::resource('centers', CenterController::class);
+Route::resource('convocatories', ConvocatoryController::class);
+Route::resource('events', EventController::class);
+Route::resource('headers', HeaderController::class);
+Route::resource('links', LinkController::class);
+Route::resource('logs', LogAccessController::class);
+Route::resource('news', NewsController::class);
+Route::resource('users', UserController::class);
 

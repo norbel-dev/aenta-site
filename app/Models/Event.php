@@ -4,6 +4,7 @@ namespace App\Models;
 
 use App\Enums\Status;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Validation\Rules\Enum;
 
 class Event extends Model
 {
@@ -21,6 +22,18 @@ class Event extends Model
     {
         return [
             'status' => Status::class,
+        ];
+    }
+
+    static function rules(){
+        return [
+            'title' => 'required|string|max:255',
+            'description' => 'required|string',
+            'event_date' => 'required|date',
+            'event_date_end' => 'nullable|date|after_or_equal:event_date',
+            'location' => 'required|string',
+            'image' => 'nullable|image|max:2048',
+            'status' => 'required', new Enum(Status::class),
         ];
     }
 
