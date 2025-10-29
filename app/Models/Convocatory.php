@@ -4,10 +4,13 @@ namespace App\Models;
 
 use App\Enums\Media;
 use App\Enums\Status;
+use App\Traits\HasSlugRouteKey;
 use Illuminate\Database\Eloquent\Model;
 
 class Convocatory extends Model
 {
+    use HasSlugRouteKey;
+
     protected $fillable = [
         'title',
         'media',
@@ -20,9 +23,4 @@ class Convocatory extends Model
         'status' => Status::class,
         'media'=> Media::class
     ];
-
-    public function getRouteKeyName()
-    {
-        return 'slug';
-    }
 }

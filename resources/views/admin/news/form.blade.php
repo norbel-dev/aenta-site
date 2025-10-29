@@ -1,7 +1,6 @@
 @extends('adminlte::page')
 
-{{-- @section('title', {{ $item->exists ? 'Edit News' : 'Create News' }}) --}}
-@section('title', 'Edit News')
+@section('title', $item->exists ? 'Edit News' : 'Create News')
 
 @section('content_header')
     <h1>Edit News</h1>
@@ -9,10 +8,8 @@
 
 @section('content')
 <div class="container">
-    <h2>{{ $item->exists ? 'Edit News' : 'Create News' }}</h2>
-
     <form method="POST"
-          action="{{ $item->exists ? route('admin.news.update', $news) : route('admin.news.store') }}"
+          action="{{ $item->exists ? route('admin.news.update', $item) : route('admin.news.store') }}"
           enctype="multipart/form-data">
         @csrf
         @if($item->exists)

@@ -6,6 +6,7 @@ use Illuminate\Routing\Controller as BaseController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
 use App\Traits\HasImageUpload;
+use Illuminate\Database\Eloquent\Model;
 
 abstract class BaseCrudController extends BaseController
 {
@@ -20,20 +21,6 @@ abstract class BaseCrudController extends BaseController
     public function __construct()
     {
         $this->applyPermissionMiddleware();
-    }
-
-    protected function applyPermissionMiddleware(): void
-    {
-        if (!isset($this->permissionPrefix)) {
-            return;
-        }
-
-        $prefix = $this->permissionPrefix;
-
-        $this->middleware("can:{$prefix}")->only('index');
-        $this->middleware("can:{$prefix}.create")->only(['create', 'store']);
-        $this->middleware("can:{$prefix}.edit")->only(['edit', 'update']);
-        $this->middleware("can:{$prefix}.destroy")->only('destroy');
     }
 
     public function create()
@@ -61,15 +48,21 @@ abstract class BaseCrudController extends BaseController
         return redirect()->back()->with('success', 'Registro creado correctamente.');
     }
 
-    public function edit($id)
+    public function show($item)
     {
-        $item = $this->model::findOrFail($id);
+        $item = $this->resolveModel($item);
+        return view("admin.{$this->folder}.show", compact('item'));
+    }
+
+    public function edit($item)
+    {
+        $item = $this->resolveModel($item);
         return view("admin.{$this->folder}.form", compact('item'));
     }
 
-    public function update(Request $request, $id)
+    public function update(Request $request, $item)
     {
-        $item = $this->model::findOrFail($id);
+        $item = $this->resolveModel($item);
         $validated = $request->validate($this->validationRules());
 
         $paths = [
@@ -92,9 +85,9 @@ abstract class BaseCrudController extends BaseController
         return redirect()->back()->with('success', 'Registro actualizado correctamente.');
     }
 
-    public function destroy($id)
+    public function destroy($item)
     {
-        $item = $this->model::findOrFail($id);
+        $item = $this->resolveModel($item);
         $this->deleteImage($item->image, $item->thumbnail);
         $item->delete();
 
@@ -117,5 +110,36 @@ abstract class BaseCrudController extends BaseController
     protected function fillableData(Request $request): array
     {
         return $request->only((new $this->model())->getFillable());
+    }
+
+    /**
+     * Protección de las rutas.
+     */
+    protected function applyPermissionMiddleware(): void
+    {
+        if (!isset($this->permissionPrefix)) {
+            return;
+        }
+
+        $prefix = $this->permissionPrefix;
+
+        $this->middleware("can:{$prefix}")->only('index');
+        $this->middleware("can:{$prefix}.create")->only(['create', 'store']);
+        $this->middleware("can:{$prefix}.edit")->only(['edit', 'update']);
+        $this->middleware("can:{$prefix}.destroy")->only('destroy');
+    }
+
+    /**
+     * Instancia el modelo correcto.
+     */
+    protected function resolveModel($identifier)
+    {
+        if ($identifier instanceof $this->model){
+            return $identifier;
+        }
+        $instance = new $this->model;
+        return $instance->where('slug', $identifier)
+                        ->orWhere('id', $identifier)
+                        ->firstOrFail();
     }
 }

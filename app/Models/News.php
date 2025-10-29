@@ -3,11 +3,14 @@
 namespace App\Models;
 
 use App\Enums\Status;
+use App\Traits\HasSlugRouteKey;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Validation\Rules\Enum;
 
 class News extends Model
 {
+    use HasSlugRouteKey;
+
     protected $fillable = [
         'title',
         'content',
@@ -31,11 +34,6 @@ class News extends Model
             'status' => 'required', new Enum(Status::class),
             'published_at' => 'required|date',
         ];
-    }
-
-    public function getRouteKeyName()
-    {
-        return 'slug';
     }
 }
 

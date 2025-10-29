@@ -3,11 +3,14 @@
 namespace App\Models;
 
 use App\Enums\Status;
+use App\Traits\HasSlugRouteKey;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Validation\Rules\Enum;
 
 class Article extends Model
 {
+    use HasSlugRouteKey;
+
     protected $fillable = [
         'title',
         'abstract',
@@ -37,8 +40,8 @@ class Article extends Model
         ];
     }
 
-    public function getRouteKeyName()
-    {
-        return 'slug';
-    }
+    // public function getRouteKeyName()
+    // {
+    //     return 'slug';
+    // }
 }

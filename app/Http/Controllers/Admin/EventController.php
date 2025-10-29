@@ -16,9 +16,4 @@ class EventController extends BaseCrudController
         $events = Event::all();
         return view('admin.events.index', compact('events'));
     }
-
-    public function show(Event $event)
-    {
-        return view('admin.events.show', compact('event'));
-    }
 }

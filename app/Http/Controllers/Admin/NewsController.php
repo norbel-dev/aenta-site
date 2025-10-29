@@ -16,9 +16,4 @@ class NewsController extends BaseCrudController
         $news = News::where('status', Status::EDIT_PUBLISHED)->latest()->get();
         return view('admin.news.index', compact('news'));
     }
-
-    public function show(News $news)
-    {
-        return view('admin.news.show', compact('news'));
-    }
 }

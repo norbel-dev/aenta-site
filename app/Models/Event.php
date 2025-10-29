@@ -3,11 +3,14 @@
 namespace App\Models;
 
 use App\Enums\Status;
+use App\Traits\HasSlugRouteKey;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Validation\Rules\Enum;
 
 class Event extends Model
 {
+    use HasSlugRouteKey;
+
     protected $fillable = [
         'title',
         'description',
@@ -35,10 +38,5 @@ class Event extends Model
             'image' => 'nullable|image|max:2048',
             'status' => 'required', new Enum(Status::class),
         ];
-    }
-
-    public function getRouteKeyName()
-    {
-        return 'slug';
     }
 }
