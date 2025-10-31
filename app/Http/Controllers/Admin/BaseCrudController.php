@@ -64,7 +64,7 @@ abstract class BaseCrudController extends BaseController
     {
         $item = $this->resolveModel($item);
         $validated = $request->validate($this->validationRules());
-
+        $request['published_at'] = date('Y-m-d', strtotime($request->published_at));
         $paths = [
             'image' => $item->image,
             'thumbnail' => $item->thumbnail,
