@@ -1,3 +1,3 @@
 <div>
-    <p>Estamos mostrando el artículo: {{$article->title}}</p>
+    <p>Estamos mostrando la noticia: {{$news->title}}</p>
 </div>
