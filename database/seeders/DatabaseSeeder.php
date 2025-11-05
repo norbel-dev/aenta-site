@@ -91,7 +91,7 @@ class DatabaseSeeder extends Seeder
             'name' => 'Norbel González Peña',
             'email' => 'norbelkots@gmail.com',
             'email_verified_at' => now(),
-            'password' => bcrypt('L0tt3ry34*Aent@Site'), // password
+            'password' => bcrypt('Aent@Site'), // password
             'two_factor_secret' => null,
             'two_factor_recovery_codes' => null,
             'remember_token' => Str::random(10),
@@ -100,10 +100,21 @@ class DatabaseSeeder extends Seeder
         ]);
 
         User::create([
-            'name' => 'Invitado',
+            'name' => 'AAA',
             'email' => 'norbel@aenta.cu',
             'email_verified_at' => now(),
-            'password' => bcrypt('L0tt3ry34*Aent@Site'), // password
+            'password' => bcrypt('Aent@Site'), // password
+            'two_factor_secret' => null,
+            'two_factor_recovery_codes' => null,
+            'remember_token' => Str::random(10),
+            'profile_photo_path' => null,
+            'current_team_id' => null,
+        ]);
+        User::create([
+            'name' => 'BBB',
+            'email' => 'ngpena@nauta.cu',
+            'email_verified_at' => now(),
+            'password' => bcrypt('Aent@Site'), // password
             'two_factor_secret' => null,
             'two_factor_recovery_codes' => null,
             'remember_token' => Str::random(10),
@@ -112,41 +123,44 @@ class DatabaseSeeder extends Seeder
         ]);
 
         User::find(1)->roles()->sync($superadmin);
-        User::find(2)->roles()->sync($guest);
+        User::find(2)->roles()->sync($publisher);
+        User::find(3)->roles()->sync($publisher);
+
+        $users = User::where('id', '>', 1)->get();
 
         $this->CreateArticles();
         $this->CreateCenters();
         $this->CreateEvents();
-        $this->CreateNews();
+        $this->CreateNews($users);
     }
 
-    function CreateNews(){
+    function CreateNews($users){
         $fact = Factory::create();
         $title1 = $fact->sentence();
         $title2 = $fact->sentence();
         $title3 = $fact->sentence();
-        News::create([
+        $users[0]->news()->save( News::create([
             'title' => $title1,
             'slug' => Str::slug($title1),
             'content' => $fact->paragraphs(3, true),
             'status' => Status::EDIT_PUBLISHED,
             'published_at' => Carbon::now()->subDays(2),
-        ]);
+        ]));
 
-        News::create([
+        $users[0]->news()->save( News::create([
             'title' => $title2,
             'slug' => Str::slug($title2),
             'content' => $fact->paragraphs(3, true),
             'status' => Status::EDIT_DRAFT,
-        ]);
+        ]));
 
-        News::create([
+        $users[1]->news()->save( News::create([
             'title' => $title3,
             'slug' => Str::slug($title3),
             'content' => $fact->paragraphs(3, true),
             'status' => Status::EDIT_PUBLISHED,
             'published_at' => Carbon::now()->subDays(5),
-        ]);
+        ]));
     }
 
     function CreateEvents(){

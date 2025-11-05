@@ -39,4 +39,8 @@ class Event extends Model
             'status' => 'required', new Enum(Status::class),
         ];
     }
+
+    public function user(){
+        return $this->belongsTo(User::class);
+    }
 }

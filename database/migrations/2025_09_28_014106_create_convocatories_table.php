@@ -21,6 +21,8 @@ return new class extends Migration
             $table->date('date');
             $table->date('date_end')->nullable();
             $table->enum('status', Status::cases())->default(status::EDIT_DRAFT);
+            $table->unsignedBigInteger('user_id')->nullable();
+            $table->foreign('user_id')->references('id')->on('users')->onDelete('set null');
             $table->timestamps();
         });
     }

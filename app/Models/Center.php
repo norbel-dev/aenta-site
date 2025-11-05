@@ -12,5 +12,8 @@ class Center extends Model
         'vision',
         'contact',
         'address',
+        'tel',
+        'facebook',
+        'twiter',
     ];
 }

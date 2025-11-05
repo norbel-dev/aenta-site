@@ -18,6 +18,9 @@ return new class extends Migration
             $table->text('vision')->nullable();
             $table->string('contact')->nullable();
             $table->string('address')->nullable();
+            $table->text('tel')->nullable();
+            $table->text('facebook')->nullable();
+            $table->text('twiter')->nullable();
             $table->timestamps();
         });
     }

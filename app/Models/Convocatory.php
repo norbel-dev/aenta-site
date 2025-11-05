@@ -23,4 +23,8 @@ class Convocatory extends Model
         'status' => Status::class,
         'media'=> Media::class
     ];
+
+    public function user(){
+        return $this->belongsTo(User::class);
+    }
 }

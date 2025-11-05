@@ -13,6 +13,7 @@ class News extends Model
 
     protected $fillable = [
         'title',
+        'slug',
         'content',
         'image',
         'status',
@@ -34,6 +35,10 @@ class News extends Model
             'status' => 'required', new Enum(Status::class),
             'published_at' => 'required|date',
         ];
+    }
+
+    public function user(){
+        return $this->belongsTo(User::class);
     }
 }
 

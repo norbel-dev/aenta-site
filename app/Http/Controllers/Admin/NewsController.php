@@ -4,6 +4,8 @@ namespace App\Http\Controllers\Admin;
 
 use App\Enums\Status;
 use App\Models\News;
+use App\Models\User;
+use Illuminate\Support\Facades\Auth;
 
 class NewsController extends BaseCrudController
 {
@@ -13,7 +15,12 @@ class NewsController extends BaseCrudController
 
     public function index()
     {
-        $news = News::where('status', Status::EDIT_PUBLISHED)->latest()->get();
+        $user = User::find(Auth::id());
+        if ($user->isAdmin() || $user->isSuperAdmin()){
+            $news = News::with('user')->orderByDesc('published_at')->get();
+            return view('admin.news.index', compact('news'));
+        }
+        $news = $user->news()->orderByDesc('published_at')->get();
         return view('admin.news.index', compact('news'));
     }
 }

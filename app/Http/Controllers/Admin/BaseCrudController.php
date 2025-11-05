@@ -32,6 +32,7 @@ abstract class BaseCrudController extends BaseController
     public function store(Request $request)
     {
         $validated = $request->validate($this->validationRules());
+        $request['published_at'] = date('Y-m-d', strtotime($request['published_at']));
 
         $paths = ['image' => null, 'thumbnail' => null];
         if ($request->hasFile('image')) {
@@ -45,7 +46,7 @@ abstract class BaseCrudController extends BaseController
 
         $this->model::create($data);
 
-        return redirect()->back()->with('success', 'Registro creado correctamente.');
+        return redirect()->back()->with('info', 'Registro creado correctamente.');
     }
 
     public function show($item)
@@ -63,8 +64,9 @@ abstract class BaseCrudController extends BaseController
     public function update(Request $request, $item)
     {
         $item = $this->resolveModel($item);
-        $validated = $request->validate($this->validationRules());
+        //dd($request['published_at']);
         $request['published_at'] = date('Y-m-d', strtotime($request->published_at));
+        $validated = $request->validate($this->validationRules());
         $paths = [
             'image' => $item->image,
             'thumbnail' => $item->thumbnail,
@@ -82,7 +84,7 @@ abstract class BaseCrudController extends BaseController
 
         $item->update($data);
 
-        return redirect()->back()->with('success', 'Registro actualizado correctamente.');
+        return redirect()->back()->with('info', 'Registro actualizado correctamente.');
     }
 
     public function destroy($item)
@@ -91,7 +93,7 @@ abstract class BaseCrudController extends BaseController
         $this->deleteImage($item->image, $item->thumbnail);
         $item->delete();
 
-        return redirect()->back()->with('success', 'Registro eliminado correctamente.');
+        return redirect()->back()->with('info', 'Registro eliminado correctamente.');
     }
 
     // ---------- Helpers ----------
