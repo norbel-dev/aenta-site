@@ -15,12 +15,28 @@ class NewsController extends BaseCrudController
 
     // public function index()
     // {
-    //     $user = User::find(Auth::id());
-    //     if ($user->isAdmin() || $user->isSuperAdmin()){
-    //         $news = News::with('user')->orderByDesc('published_at')->get();
-    //         return view('admin.news.index', compact('news'));
-    //     }
-    //     $news = $user->news()->orderByDesc('published_at')->get();
-    //     return view('admin.news.index', compact('news'));
+    //    $filterable = [
+    //     'title' => [
+    //         'label' => 'Título',
+    //         'type' => 'text',
+    //     ],
+    //     'status' => [
+    //         'label' => 'Estado',
+    //         'type' => 'select',
+    //         'options' => collect(\App\Enums\Status::cases())
+    //             ->mapWithKeys(fn($case) => [$case->value => $case->name])
+    //             ->toArray(),
+    //     ],
+    //     'published_at' => [
+    //         'label' => 'Fecha publicación',
+    //         'type' => 'date',
+    //     ],
+    //     'autor' => [
+    //         'label' => 'Autor',
+    //         'type' => 'relation',
+    //     ],
+    // ];
+
+    // return view('admin.news.index', compact('filterable'));
     // }
 }

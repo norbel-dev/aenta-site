@@ -5,19 +5,26 @@
             <div class="row mb-4 g-2">
                 @foreach ($filterable as $field => $meta)
                     <div class="col-md-3">
-                        @if ($meta['type'] === 'text')
+                        @php $type = $meta['type'] ?? 'text'; @endphp
+
+                        @if ($type === 'text')
                             <input wire:model.live="filters.{{ $field }}" type="text"
-                                class="form-control" placeholder="Buscar {{ strtolower($meta['label']) }}">
-                        @elseif ($meta['type'] === 'select')
+                                class="form-control" placeholder="Buscar {{ strtolower($meta['label'] ?? $field) }}">
+                        @elseif ($type === 'select')
                             <select wire:model.live="filters.{{ $field }}" class="form-select">
-                                <option value="">-- {{ $meta['label'] }} --</option>
-                                @foreach ($meta['options'] as $value => $label)
-                                    <option value="{{ $value }}">{{ $label }}</option>
+                                <option value="">{{ $meta['label'] ?? '--' }}</option>
+                                @foreach ($meta['options'] ?? [] as $val => $label)
+                                    <option value="{{ $val }}">{{ $label }}</option>
                                 @endforeach
                             </select>
-                        @elseif ($meta['type'] === 'date')
-                            <input wire:model.live="filters.{{ $field }}" type="date"
-                                class="form-control" placeholder="{{ $meta['label'] }}">
+                        @elseif ($type === 'date')
+                            <input wire:model.live="filters.{{ $field }}" type="date" class="form-control">
+                        @elseif ($type === 'relation')
+                            {{-- 'autor' usa text que hace whereHas('user', 'name') --}}
+                            <input wire:model.live="filters.{{ $field }}" type="text" class="form-control"
+                                placeholder="Buscar {{ strtolower($meta['label'] ?? $field) }}">
+                        @else
+                            <input wire:model.live="filters.{{ $field }}" type="text" class="form-control">
                         @endif
                     </div>
                 @endforeach
