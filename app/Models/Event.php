@@ -19,6 +19,7 @@ class Event extends Model
         'location',
         'image',
         'status',
+        'user_id',
     ];
 
     protected function casts(): array

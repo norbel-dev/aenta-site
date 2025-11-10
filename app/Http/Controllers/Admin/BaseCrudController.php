@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Str;
 use App\Traits\HasImageUpload;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Auth;
 
 abstract class BaseCrudController extends BaseController
 {
@@ -21,6 +22,11 @@ abstract class BaseCrudController extends BaseController
     public function __construct()
     {
         $this->applyPermissionMiddleware();
+    }
+
+    public function index()
+    {
+        return view("admin.{$this->folder}.index");
     }
 
     public function create()
@@ -43,6 +49,7 @@ abstract class BaseCrudController extends BaseController
         $data['image'] = $paths['image'];
         $data['thumbnail'] = $paths['thumbnail'];
         $data['slug'] = Str::slug($request['title']);
+        $data['user_id'] = Auth::id();
 
         $this->model::create($data);
 
@@ -81,6 +88,7 @@ abstract class BaseCrudController extends BaseController
         $data['image'] = $paths['image'];
         $data['thumbnail'] = $paths['thumbnail'];
         $data['slug'] = Str::slug($request['title']);
+        $data['user_id'] = Auth::id();
 
         $item->update($data);
 

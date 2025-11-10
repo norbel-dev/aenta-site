@@ -17,6 +17,7 @@ class Header extends Model
         'image',
         'status',
         'published_at',
+        'user_id',
     ];
 
     protected function casts(): array

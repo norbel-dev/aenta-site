@@ -16,6 +16,7 @@ class Link extends Model
         'link',
         'image',
         'status',
+        'user_id',
     ];
 
     protected function casts(): array

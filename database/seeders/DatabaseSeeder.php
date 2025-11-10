@@ -229,6 +229,9 @@ class DatabaseSeeder extends Seeder
             'vision' => 'To be a global leader in technology and science solutions.',
             'contact' => 'info@techscience.com',
             'address' => 'Playa, La Habana, Cuba',
+            'tel' => '+5372022524',
+            'facebook' => 'facebook.com/aenta',
+            'twiter' => 'x.com/aenta',
         ]);
     }
 }

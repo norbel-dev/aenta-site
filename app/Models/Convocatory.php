@@ -17,6 +17,7 @@ class Convocatory extends Model
         'date',
         'date_end',
         'status',
+        'user_id',
     ];
 
     protected $casts = [

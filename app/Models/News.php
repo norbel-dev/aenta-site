@@ -18,6 +18,13 @@ class News extends Model
         'image',
         'status',
         'published_at',
+        'user_id',
+    ];
+
+    public static array $filterable =  [
+        'title' => ['type' => 'text', 'label' => 'Título'],
+        'status' => ['type' => 'select', 'label' => 'Estado', 'options' => [1 => 'Borrador', 2 => 'Publicado', 3 => 'Cancelado', 4 => 'Finalizado', 5 => 'Muy Importante']],
+        'published_at' => ['type' => 'date', 'label' => 'Fecha de publicación'],
     ];
 
     protected function casts(): array

@@ -32,6 +32,15 @@ enum Status:int
         };
     }
 
+    public static function options(): array
+    {
+        $opts = [];
+        foreach (self::cases() as $case) {
+            $opts[$case->value] = $case->label();
+        }
+        return $opts;
+    }
+
     public function isFinalized(): bool
     {
         return $this->value === self::EDIT_FINISHED;
