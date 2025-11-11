@@ -14,14 +14,16 @@ function imagePreview() {
 
 function initializeDatePicker(minDate = new Date(), maxDate = new Date(), clase="campo-fecha") {
     let today = new Date();
-    jQuery('.'+clase).datepicker({
-        autoclose: true,
-        format: "dd-mm-yyyy",
-        defaultDate: today,
-        startDate: minDate,
-        endDate: maxDate,
-        minDate: minDate,
-        maxDate: maxDate,
-        todayHighlight: true
+    jQuery('.'+clase).each(function() {
+        $(this).datepicker({
+            autoclose: true,
+            format: "dd-mm-yyyy",
+            defaultDate: today,
+            startDate: minDate,
+            endDate: maxDate,
+            minDate: minDate,
+            maxDate: maxDate,
+            todayHighlight: true
+        });
     });
 }

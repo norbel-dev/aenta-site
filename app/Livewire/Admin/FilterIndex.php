@@ -52,6 +52,8 @@ class FilterIndex extends Component
         foreach ($this->filterable as $field => $meta) {
             $this->filters[$field] = '';
         }
+        $this->filters['published_from'] = '';
+        $this->filters['published_to'] = '';
     }
 
     public function updating($field)
@@ -77,7 +79,16 @@ class FilterIndex extends Component
             $meta = $this->filterable[$field] ?? [];
             $type = $meta['type'] ?? 'text';
 
-            if ($type === 'relation') {
+            // 🔥 Filtro adicional: rango de fechas (from / to)
+            if ($this->filters['published_from'] || $this->filters['published_to']) {
+                if ($this->filters['published_from']) {
+                    $query->whereDate('published_at', '>=', date('Y-m-d', strtotime($this->filters['published_from'])));
+                }
+
+                if ($this->filters['published_to']) {
+                    $query->whereDate('published_at', '<=', date('Y-m-d', strtotime($this->filters['published_to'])));
+                }
+            }else if ($type === 'relation') {
                 if ($field === 'autor') {
                     $query->whereHas('user', function (Builder $q) use ($value) {
                         $q->where('name', 'like', '%' . $value . '%');
@@ -94,22 +105,17 @@ class FilterIndex extends Component
                     }
                 }
             } else {
-                // Tipos comunes
                 switch ($type) {
                     case 'text':
-                        $query->where($field, 'like', '%' . $value . '%');
+                        $query->where($field, 'like', "%{$value}%");
                         break;
                     case 'select':
                         $query->where($field, $value);
                         break;
-                    case 'date':
-                        $query->whereDate($field, $value);
-                        break;
-                    default:
-                        // noop
-                        break;
                 }
             }
+
+
         }
 
         // Siempre eager-load del autor por rendimiento si existe relación user
@@ -122,5 +128,16 @@ class FilterIndex extends Component
         return view('livewire.admin.filter-index', [
             'items' => $items,
         ]);
+    }
+
+    protected $listeners = [
+        'dateChanged' => 'onDateChanged', // escucha el evento JS
+    ];
+
+    public function onDateChanged(string $field, ?string $value)
+    {
+        // asigna el valor al filtro correspondiente
+        $this->filters[$field] = $value;
+        $this->resetPage(); // opcional: resetea la paginación
     }
 }

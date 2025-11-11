@@ -26,10 +26,10 @@ class News extends Model
             'type' => 'text',
             'label' => 'Título',
         ],
-        'published_at' => [
-            'type' => 'date',
-            'label' => 'Fecha de publicación',
-        ],
+        // 'published_at' => [
+        //     'type' => 'date',
+        //     'label' => 'Fecha de publicación',
+        // ],
         'autor' => [
             'type' => 'relation',
             'label' => 'Autor',

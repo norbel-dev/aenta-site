@@ -1,35 +1,45 @@
 <div>
     <div class="card">
         <div class="card-header">
-            <div class="row mb-4 g-2">
+            <div class="row mb-4 g-2 align-items-end">
                 @foreach ($filterable as $field => $meta)
                     <div class="col-md-3">
                         @php $type = $meta['type'] ?? 'text'; @endphp
 
                         @if ($type === 'text')
                             <input wire:model.live="filters.{{ $field }}" type="text"
-                                class="form-control m-2" placeholder="Buscar {{ strtolower($meta['label'] ?? $field) }}">
+                                class="form-control"
+                                placeholder="Buscar {{ strtolower($meta['label'] ?? $field) }}">
                         @elseif ($type === 'select')
-                            <select wire:model.live="filters.{{ $field }}" class="form-control m-2">
+                            <select wire:model.live="filters.{{ $field }}" class="form-control">
                                 <option value="">{{ $meta['label'] ?? '--' }}</option>
                                 @foreach ($meta['options'] ?? [] as $val => $label)
                                     <option value="{{ $val }}">{{ $label }}</option>
                                 @endforeach
                             </select>
-                        @elseif ($type === 'date')
-                            <input wire:model.live="filters.{{ $field }}" type="date" class="form-control m-2 campo-fecha"
-                                 placeholder="dd-mm-yyyy">
                         @elseif ($type === 'relation')
-                            <input wire:model.live="filters.{{ $field }}" type="text" class="form-control m-2"
+                            <input wire:model.live="filters.{{ $field }}" type="text"
+                                class="form-control"
                                 placeholder="Buscar {{ strtolower($meta['label'] ?? $field) }}">
-                        @else
-                            <input wire:model.live="filters.{{ $field }}" type="text" class="form-control m-2">
                         @endif
                     </div>
                 @endforeach
 
+                {{-- 🔥 FILTRO: RANGO DE FECHAS --}}
+                <div class="col-md-3">
+                    <label for="published_from" class="form-label text-muted small mb-0">Desde</label>
+                    <input wire:model.live="filters.published_from" id="published_from"
+                        type="text" class="form-control campo-fecha" placeholder="Fecha desde">
+                </div>
+
+                <div class="col-md-3">
+                    <label for="published_to" class="form-label text-muted small mb-0">Hasta</label>
+                    <input wire:model.live="filters.published_to" id="published_to"
+                        type="text" class="form-control campo-fecha" placeholder="Fecha hasta">
+                </div>
+
                 <div class="col-md-2">
-                    <button wire:click="$refresh" class="btn btn-secondary w-100 ml-2 mr-2">Limpiar</button>
+                    <button wire:click="$refresh" class="btn btn-secondary w-100 mt-3">Limpiar</button>
                 </div>
             </div>
         </div>
