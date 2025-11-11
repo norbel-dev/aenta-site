@@ -43,22 +43,7 @@
             let minDate = new Date();
             minDate.setFullYear(minDate.getFullYear() - 1);
             initializeDatePicker(minDate);
-            $('.campo-fecha').on('change', function () {
-                    // id del input: por ejemplo "published_from" o "published_to"
-        const fieldId = this.id;
-        const value = this.value;
-
-        // Asegúrate que el input existe y tiene wire:model
-        const el = document.getElementById(fieldId);
-        if (!el) {
-            console.warn('Input para Livewire no encontrado con id:', fieldId);
-            return;
-        }
-
-        // Actualiza el valor del input y dispara evento 'input' (bubbles) para Livewire
-        el.value = value;
-        el.dispatchEvent(new Event('input', { bubbles: true }));
-                });
+            dateOnChange();
         });
     </script>
 @endsection
