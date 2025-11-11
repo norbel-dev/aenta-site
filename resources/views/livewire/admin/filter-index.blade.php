@@ -1,7 +1,6 @@
 <div>
     <div class="card">
         <div class="card-header">
-            {{-- 🔍 Filtros dinámicos --}}
             <div class="row mb-4 g-2">
                 @foreach ($filterable as $field => $meta)
                     <div class="col-md-3">
@@ -9,28 +8,28 @@
 
                         @if ($type === 'text')
                             <input wire:model.live="filters.{{ $field }}" type="text"
-                                class="form-control" placeholder="Buscar {{ strtolower($meta['label'] ?? $field) }}">
+                                class="form-control m-2" placeholder="Buscar {{ strtolower($meta['label'] ?? $field) }}">
                         @elseif ($type === 'select')
-                            <select wire:model.live="filters.{{ $field }}" class="form-select">
+                            <select wire:model.live="filters.{{ $field }}" class="form-control m-2">
                                 <option value="">{{ $meta['label'] ?? '--' }}</option>
                                 @foreach ($meta['options'] ?? [] as $val => $label)
                                     <option value="{{ $val }}">{{ $label }}</option>
                                 @endforeach
                             </select>
                         @elseif ($type === 'date')
-                            <input wire:model.live="filters.{{ $field }}" type="date" class="form-control">
+                            <input wire:model.live="filters.{{ $field }}" type="date" class="form-control m-2 campo-fecha"
+                                 placeholder="dd-mm-yyyy">
                         @elseif ($type === 'relation')
-                            {{-- 'autor' usa text que hace whereHas('user', 'name') --}}
-                            <input wire:model.live="filters.{{ $field }}" type="text" class="form-control"
+                            <input wire:model.live="filters.{{ $field }}" type="text" class="form-control m-2"
                                 placeholder="Buscar {{ strtolower($meta['label'] ?? $field) }}">
                         @else
-                            <input wire:model.live="filters.{{ $field }}" type="text" class="form-control">
+                            <input wire:model.live="filters.{{ $field }}" type="text" class="form-control m-2">
                         @endif
                     </div>
                 @endforeach
 
                 <div class="col-md-2">
-                    <button wire:click="$refresh" class="btn btn-secondary w-100">Limpiar</button>
+                    <button wire:click="$refresh" class="btn btn-secondary w-100 ml-2 mr-2">Limpiar</button>
                 </div>
             </div>
         </div>
@@ -51,7 +50,7 @@
                                 <h4 class="card-title fw-bold mb-2"><a href="{{route($routePrefix . '.show', $item)}}">{{ $item->title ?? '(Sin título)' }}</a></h4>
                                 <p class="mb-2 card-title-sub text-uppercase fw-normal ls1">
                                     <a href="{{route($routePrefix . '.show', $item)}}" class="text-black-50">
-                                        {{ isset($item->published_at) ? \Carbon\Carbon::parse($item->published_at)->format('d/m/Y') : '---' }}
+                                        {{ isset($item->published_at) ? \Carbon\Carbon::parse($item->published_at)->format('d-m-Y') : '---' }}
                                     </a>
                                 </p>
                                 <div class="rating-stars mb-2"><i class="icon-star3"></i><i class="icon-star3"></i><i class="icon-star3"></i><i class="icon-star3"></i><i class="icon-star-half-full"></i> <span>{{$item->user->name}}</span></div>

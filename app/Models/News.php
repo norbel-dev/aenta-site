@@ -26,11 +26,6 @@ class News extends Model
             'type' => 'text',
             'label' => 'Título',
         ],
-        'status' => [
-            'type' => 'select',
-            'label' => 'Estado',
-            'enum' => Status::class, // el componente cargará options vía enum::options()
-        ],
         'published_at' => [
             'type' => 'date',
             'label' => 'Fecha de publicación',
@@ -39,6 +34,11 @@ class News extends Model
             'type' => 'relation',
             'label' => 'Autor',
             // no es necesario poner relation/target para autor porque el componente lo trata como user.name
+        ],
+        'status' => [
+            'type' => 'select',
+            'label' => 'Estado',
+            'enum' => Status::class, // el componente cargará options vía enum::options()
         ],
     ];
 

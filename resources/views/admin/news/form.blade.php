@@ -73,7 +73,7 @@
                 <div class="form-group mt-3">
                     <label for="published_at">Published at</label>
                         <div class="input-group">
-                            <input type="text" name="published_at" class="form-control" placeholder="dd-mm-yyyy" id="datepicker-autoclose"
+                            <input type="text" name="published_at" class="form-control campo-fecha" placeholder="dd-mm-yyyy"
                                 value="{{null !== old('published_at') ? date('d-m-Y', strtotime(old('published_at'))) : date('d-m-Y', strtotime($item->published_at))}}" required>
                             <i class="glyphicon glyphicon-calendar fas fa-fw fa-calendar"></i>
                         </div>
@@ -93,40 +93,13 @@
 
 @section('js')
     <script src="{{ URL::asset('js/datepicker.js') }}"></script>
+    <script src="{{ URL::asset('js/main.js') }}"></script>
     <script>
         $(document).ready(function() {
             imagePreview();
-            initializeDatePicker();
-        });
-
-        function imagePreview() {
-            document.getElementById('image').addEventListener('change', (e) => {
-                const file = e.target.files[0];
-                const preview = document.getElementById('preview');
-                if (!file) return;
-                const reader = new FileReader();
-                reader.onload = (ev) => {
-                    preview.src = ev.target.result;
-                    preview.style.display = 'block';
-                };
-                reader.readAsDataURL(file);
-            });
-        }
-
-        function initializeDatePicker() {
-            let today = new Date();
             let minDate = new Date();
             minDate.setFullYear(minDate.getFullYear() - 1);
-            jQuery('#datepicker-autoclose').datepicker({
-                autoclose: true,
-                format: "dd-mm-yyyy",
-                defaultDate: today,
-                startDate: minDate,
-                endDate: today,
-                minDate: minDate,
-                maxDate: today,
-                todayHighlight: true
-            });
-        }
+            initializeDatePicker(minDate);
+        });
     </script>
 @endsection
