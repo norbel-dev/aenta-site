@@ -149,7 +149,6 @@ abstract class BaseCrudController extends BaseController
         }
         $instance = new $this->model;
         return $instance->where('slug', $identifier)
-                        ->orWhere('id', $identifier)
                         ->firstOrFail();
     }
 }

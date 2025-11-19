@@ -38,14 +38,14 @@
                         type="text" class="form-control campo-fecha" placeholder="Fecha hasta">
                 </div>
 
-                <div class="col-md-2">
-                    <button wire:click="$refresh" class="btn btn-secondary w-100 mt-3">Limpiar</button>
+                <div class="col-md-1">
+                    <button wire:click="$refresh" class="btn btn-secondary w-100 mt-3" title="Limpiar filtros"><i class="bi bi-eraser-fill"></i></button>
                 </div>
             </div>
         </div>
         <div class="card-body">
             @can($routePrefix . '.create')
-                <a href="{{ route($routePrefix . '.create') }}" class="btn btn-primary mb-3">Add New</a>
+                <a href="{{ route($routePrefix . '.create') }}" class="btn btn-primary mb-3" title="Crear Noticia"><i class="bi bi-plus-circle-fill"></i></a>
             @endcan
             <div class="row g-4 mt-4">
                 @forelse ($items as $item)
@@ -69,13 +69,13 @@
                             <div class="card-footer py-3 d-flex justify-content-between align-items-center bg-white text-muted">
                                 <span class="badge bg-{{ $item->status->color() }}">{{ $item->status->label() }}</span>
                                 @can($routePrefix . '.edit')
-                                    <a href="{{ route($routePrefix . '.edit', $item) }}" class="btn btn-sm btn-primary">Editar</a>
+                                    <a href="{{ route($routePrefix . '.edit', $item) }}" class="btn btn-sm btn-primary" title="Editar"><i class="bi bi-pencil-fill"></i></a>
                                 @endcan
                                 @can($routePrefix . '.destroy')
                                     <form action="{{ route($routePrefix . '.destroy', $item) }}" method="POST" style="display:inline;">
                                         @csrf
                                         @method('DELETE')
-                                        <button class="btn btn-sm btn-danger" onclick="return confirm('¿Eliminar esta noticia?')">Eliminar</button>
+                                        <button class="btn btn-sm btn-danger" onclick="return confirm('¿Eliminar esta noticia?')" title="Eliminar"><i class="bi bi-trash3-fill"></i></button>
                                     </form>
                                 @endcan
                             </div>

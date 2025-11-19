@@ -11,8 +11,8 @@
 <link href="{{ URL::asset('css/datepicker.css') }}" rel="stylesheet" />
 <style>
     .card-img-top-a{
-        max-height:48.44% !important;
-        height:48.44% !important;
+        max-height:25% !important;
+        height:25% !important;
     }
     .card-img-top{
         height: 100%;
