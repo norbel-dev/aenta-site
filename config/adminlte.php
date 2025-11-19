@@ -328,6 +328,12 @@ return [
         //     'label_color' => 'success',
         // ],
         [
+            'text' => 'dashboard',
+            'url' => 'admin/',
+            'can' => 'dashboard',
+            'icon' => 'bi bi-speedometer',
+        ],
+        [
             'header' => 'publications',
             'can' => 'publications'
         ],
@@ -335,37 +341,37 @@ return [
             'text' => 'articles',
             'url' => 'admin/articles',
             'can' => 'admin.articles',
-            'icon' => 'fas fa-fw fa-lock',
+            'icon' => 'bi bi-file-earmark-text-fill',
         ],
         [
             'text' => 'convocatories',
             'url' => 'admin/convocatories',
             'can' => 'admin.convocatories',
-            'icon' => 'fas fa-fw fa-lock',
+            'icon' => 'bi bi-pin-angle-fill',
         ],
         [
             'text' => 'events',
             'url' => 'admin/events',
             'can' => 'admin.events',
-            'icon' => 'fas fa-fw fa-lock',
+            'icon' => 'bi bi-calendar-date-fill',
         ],
         [
             'text' => 'headers',
             'url' => 'admin/headers',
             'can' => 'admin.headers',
-            'icon' => 'fas fa-fw fa-lock',
+            'icon' => 'bi bi-menu-button-wide-fill',
         ],
         [
             'text' => 'links',
             'url' => 'admin/links',
             'can' => 'admin.links',
-            'icon' => 'fas fa-fw fa-lock',
+            'icon' => 'bi bi-link',
         ],
         [
             'text' => 'news',
             'url' => 'admin/news',
             'can' => 'admin.news',
-            'icon' => 'fas fa-fw fa-user',
+            'icon' => 'bi bi-newspaper',
         ],
 
 
@@ -377,25 +383,25 @@ return [
             'text' => 'centers',
             'url' => 'admin/centers',
             'can' => 'admin.centers',
-            'icon' => 'fas fa-fw fa-lock',
+            'icon' => 'bi bi-diagram-3-fill',
         ],
         [
             'text' => 'logs',
             'url' => 'admin/logs',
             'can' => 'admin.logs',
-            'icon' => 'fas fa-fw fa-lock',
+            'icon' => 'bi bi-info-square-fill',
         ],
         [
             'text' => 'log_access',
             'url' => 'admin/log_access',
             'can' => 'admin.log_access',
-            'icon' => 'fas fa-fw fa-lock',
+            'icon' => 'bi bi-unlock-fill',
         ],
         [
             'text' => 'users',
             'url' => 'admin/users',
             'can' => 'admin.users',
-            'icon' => 'fas fa-fw fa-lock',
+            'icon' => 'bi bi-people-fill',
         ],
         // [
         //     'text' => 'multilevel',
