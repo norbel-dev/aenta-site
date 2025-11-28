@@ -106,7 +106,11 @@
                         <a class="nav-link" href="#">Contáctanos</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="{{ route('login') }}">Login</a>
+                        @if (Illuminate\Support\Facades\Auth::id())
+                            <a class="nav-link" href="{{ route('admin.dashboard') }}">Dashboard</a>
+                        @else
+                            <a class="nav-link" href="{{ route('login') }}">Login</a>
+                        @endif
                     </li>
                 </ul>
             </div>

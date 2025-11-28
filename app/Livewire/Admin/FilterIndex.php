@@ -123,7 +123,7 @@ class FilterIndex extends Component
             $query->with('user');
         }
 
-        $items = $query->latest()->paginate(9);
+        $items = $query->latest()->paginate(6);
 
         return view('livewire.admin.filter-index', [
             'items' => $items,

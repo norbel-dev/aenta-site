@@ -1,14 +1,21 @@
 function imagePreview() {
-    document.getElementById('image').addEventListener('change', (e) => {
+    document.getElementById('image').addEventListener('change', function (e) {
         const file = e.target.files[0];
         const preview = document.getElementById('preview');
+
         if (!file) return;
-        const reader = new FileReader();
-        reader.onload = (ev) => {
-            preview.src = ev.target.result;
-            preview.style.display = 'block';
-        };
-        reader.readAsDataURL(file);
+
+        // Si el preview es un SVG, lo reemplazamos por un IMG
+        if (preview.tagName.toLowerCase() === 'i') {
+            const img = document.createElement('img');
+            img.id = 'preview';
+            img.style.maxWidth = '200px';
+            img.style.borderRadius = '10px';
+            preview.replaceWith(img);
+        }
+
+        // Asignamos el archivo a la nueva imagen
+        document.getElementById('preview').src = URL.createObjectURL(file);
     });
 }
 

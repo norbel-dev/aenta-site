@@ -18,8 +18,8 @@
         height: 100%;
     }
     .card.dim-card{
-        max-height: 578px;
-        height: 578px;
+        max-height: 80vh;
+        height: 80vh;
     }
     .card-text.text-black-50{
         max-height: 82px;

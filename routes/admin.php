@@ -16,7 +16,7 @@ use Illuminate\Http\Request;
 use Laravel\Fortify\Fortify;
 
 
-Route::get('/', [AdminController::class, 'index']);
+Route::get('/', [AdminController::class, 'index'])->name('dashboard');
 Route::resource('articles', ArticleController::class);
 Route::resource('centers', CenterController::class);
 Route::resource('convocatories', ConvocatoryController::class);

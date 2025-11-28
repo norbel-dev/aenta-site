@@ -7,6 +7,7 @@
 @endsection
 
 @section('css')
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.20/summernote-bs5.min.css" rel="stylesheet">
     <link href="{{ URL::asset('css/datepicker.css') }}" rel="stylesheet" />
 @endsection
 
@@ -46,10 +47,21 @@
                 <div class="form-group mt-3">
                     <label for="image">Image</label>
                     <input type="file" name="image" id="image" class="form-control" accept="image/*">
-                    <div class="input-group">
-                        <img id="preview"
-                                src="{{ $item->image ? asset('storage/'.$item->image) : '' }}"
-                                style="max-width: 200px; border-radius: 10px; {{ $item->image ? '' : 'display:none;' }}">
+                    @php
+                        $currentImage = $item->exists ? $item->image : null;
+                        $preview = $currentImage
+                            ? asset('storage/' . $currentImage)
+                            : null;
+                    @endphp
+
+                    <div class="mb-3 text-center">
+                        @if ($preview)
+                            <img id="preview"
+                                src="{{ $preview }}"
+                                style="max-width:200px;border-radius:10px;">
+                        @else
+                            <i id="preview" class="bi bi-image-fill text-secondary" style="font-size: 7rem;"></i>
+                        @endif
                     </div>
                 </div>
             </div>
@@ -72,10 +84,10 @@
             <div class="col-md-4">
                 <div class="form-group mt-3">
                     <label for="published_at">Published at</label>
-                        <div class="input-group">
+                        <div class="input-group align-items-center">
                             <input type="text" name="published_at" class="form-control campo-fecha" placeholder="dd-mm-yyyy"
                                 value="{{null !== old('published_at') ? date('d-m-Y', strtotime(old('published_at'))) : date('d-m-Y', strtotime($item->published_at))}}" required>
-                            <i class="glyphicon glyphicon-calendar fas fa-fw fa-calendar"></i>
+                            <i class="bi bi-calendar-date ml-1"></i>
                         </div>
                     @error('published_at')
                         <small class="text-danger">{{$message}}</small>
@@ -92,6 +104,7 @@
 @endsection
 
 @section('js')
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.20/summernote-bs5.min.js"></script>
     <script src="{{ URL::asset('js/datepicker.js') }}"></script>
     <script src="{{ URL::asset('js/main.js') }}"></script>
     <script>
@@ -100,6 +113,16 @@
             let minDate = new Date();
             minDate.setFullYear(minDate.getFullYear() - 1);
             initializeDatePicker(minDate);
+
+            $('textarea[name=content]').summernote({
+                height: 300,
+                toolbar: [
+                    ['edit', ['undo', 'redo']],
+                    ['style', ['bold', 'italic', 'underline']],
+                    ['para', ['ul', 'ol']],
+                    ['insert', ['link']]
+                ]
+            });
         });
     </script>
 @endsection

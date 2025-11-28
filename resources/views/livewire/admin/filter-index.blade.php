@@ -1,83 +1,121 @@
 <div>
     <div class="card">
         <div class="card-header">
-            <div class="row mb-4 g-2 align-items-end">
+            <div class="row mb-1 g-2 align-items-end">
                 @foreach ($filterable as $field => $meta)
-                    <div class="col-md-3">
+                    <div class="col-md-2">
                         @php $type = $meta['type'] ?? 'text'; @endphp
 
                         @if ($type === 'text')
+                            <label for="{{ $field }}" class="form-label text-muted small mb-0">{{$meta['label'] ?? $field}}</label>
                             <input wire:model.live="filters.{{ $field }}" type="text"
-                                class="form-control"
+                                class="form-control mb-1"
                                 placeholder="Buscar {{ strtolower($meta['label'] ?? $field) }}">
                         @elseif ($type === 'select')
-                            <select wire:model.live="filters.{{ $field }}" class="form-control">
+                            <label for="{{ $field }}" class="form-label text-muted small mb-0">{{$meta['label'] ?? $field}}</label>
+                            <select wire:model.live="filters.{{ $field }}" class="form-control mb-1">
                                 <option value="">{{ $meta['label'] ?? '--' }}</option>
                                 @foreach ($meta['options'] ?? [] as $val => $label)
                                     <option value="{{ $val }}">{{ $label }}</option>
                                 @endforeach
                             </select>
                         @elseif ($type === 'relation')
+                            <label for="{{ $field }}" class="form-label text-muted small mb-0">{{$meta['label'] ?? $field}}</label>
                             <input wire:model.live="filters.{{ $field }}" type="text"
-                                class="form-control"
+                                class="form-control mb-1"
                                 placeholder="Buscar {{ strtolower($meta['label'] ?? $field) }}">
                         @endif
                     </div>
                 @endforeach
 
                 {{-- 🔥 FILTRO: RANGO DE FECHAS --}}
-                <div class="col-md-3">
+                <div class="col-md-2">
                     <label for="published_from" class="form-label text-muted small mb-0">Desde</label>
                     <input wire:model.live="filters.published_from" id="published_from"
-                        type="text" class="form-control campo-fecha" placeholder="Fecha desde">
+                        type="text" class="form-control mb-1 campo-fecha" placeholder="Fecha desde">
                 </div>
 
-                <div class="col-md-3">
+                <div class="col-md-2">
                     <label for="published_to" class="form-label text-muted small mb-0">Hasta</label>
                     <input wire:model.live="filters.published_to" id="published_to"
-                        type="text" class="form-control campo-fecha" placeholder="Fecha hasta">
+                        type="text" class="form-control mb-1 campo-fecha" placeholder="Fecha hasta">
                 </div>
 
                 <div class="col-md-1">
-                    <button wire:click="$refresh" class="btn btn-secondary w-100 mt-3" title="Limpiar filtros"><i class="bi bi-eraser-fill"></i></button>
+                    <button wire:click="$refresh" class="btn btn-secondary w-100 mt-3 mb-1" title="Limpiar filtros"><i class="bi bi-eraser-fill"></i></button>
                 </div>
             </div>
         </div>
         <div class="card-body">
-            @can($routePrefix . '.create')
-                <a href="{{ route($routePrefix . '.create') }}" class="btn btn-primary mb-3" title="Crear Noticia"><i class="bi bi-plus-circle-fill"></i></a>
-            @endcan
-            <div class="row g-4 mt-4">
+            <div class="d-flex justify-content-between align-items-center w-100">
+                @can($routePrefix . '.create')
+                    <a href="{{ route($routePrefix . '.create') }}" class="btn btn-primary mb-3" title="Crear Noticia"><i class="bi bi-plus-circle-fill"></i></a>
+                @endcan
+                <div class="d-flex align-items-center gap-3">
+                    {{ $items->links() }}
+                </div>
+            </div>
+            <div class="row g-4">
                 @forelse ($items as $item)
                     <div class="col-md-4">
                         <div class="card dim-card hover-effect border-0">
-                            @if($item->thumbnail)
-                                <a class="card-img-top-a" href="{{route($routePrefix . '.show', $item)}}">
-                                    <img class="card-img-top" src="{{ asset('storage/'.$item->thumbnail) }}" alt="Card image cap">
-                                </a>
-                            @endif
-                            <div class="card-body">
-                                <h4 class="card-title fw-bold mb-2"><a href="{{route($routePrefix . '.show', $item)}}">{{ $item->title ?? '(Sin título)' }}</a></h4>
-                                <p class="mb-2 card-title-sub text-uppercase fw-normal ls1">
-                                    <a href="{{route($routePrefix . '.show', $item)}}" class="text-black-50">
-                                        {{ isset($item->published_at) ? \Carbon\Carbon::parse($item->published_at)->format('d-m-Y') : '---' }}
+                            <div class="card-img-top-a d-flex justify-content-center p-1">
+                                @if($item->thumbnail)
+                                    <a href="{{route($routePrefix . '.show', $item)}}">
+                                        <img class="card-img-top rounded" src="{{ asset('storage/'.$item->thumbnail) }}" alt="Card image cap">
                                     </a>
-                                </p>
-                                <div class="rating-stars mb-2"><i class="icon-star3"></i><i class="icon-star3"></i><i class="icon-star3"></i><i class="icon-star3"></i><i class="icon-star-half-full"></i> <span>{{$item->user->name}}</span></div>
-                                <p class="card-text text-black-50 mb-1">{{ Str::limit($item->content ?? '', 200) }}</p>
+                                @else
+                                    <a class="d-flex justify-content-center align-items-middle" href="{{route($routePrefix . '.show', $item)}}">
+                                        <i class="bi bi-image-fill text-secondary rounded" style="font-size: 7rem;"></i>
+                                    </a>
+                                @endif
                             </div>
-                            <div class="card-footer py-3 d-flex justify-content-between align-items-center bg-white text-muted">
-                                <span class="badge bg-{{ $item->status->color() }}">{{ $item->status->label() }}</span>
-                                @can($routePrefix . '.edit')
-                                    <a href="{{ route($routePrefix . '.edit', $item) }}" class="btn btn-sm btn-primary" title="Editar"><i class="bi bi-pencil-fill"></i></a>
-                                @endcan
-                                @can($routePrefix . '.destroy')
-                                    <form action="{{ route($routePrefix . '.destroy', $item) }}" method="POST" style="display:inline;">
-                                        @csrf
-                                        @method('DELETE')
-                                        <button class="btn btn-sm btn-danger" onclick="return confirm('¿Eliminar esta noticia?')" title="Eliminar"><i class="bi bi-trash3-fill"></i></button>
-                                    </form>
-                                @endcan
+                            <div class="card-body d-flex flex-column">
+                                <div class="mb-1">
+                                    <h4 class="card-title fw-bold">
+                                        <a href="{{route($routePrefix . '.show', $item)}}">{{ $item->title ?? '(Sin título)' }}</a>
+                                    </h4>
+                                </div>
+                                <div class="mb-1">
+                                    <span class="text-black-50">
+                                        <i class="bi bi-calendar-date me-1"></i>
+                                        {{ isset($item->published_at) ? \Carbon\Carbon::parse($item->published_at)->format('d-m-Y') : '---' }}
+                                    </span>
+                                </div>
+                                <div class="mb-1">
+                                    <i class="bi bi-person me-1"></i>
+                                    <span>{{$item->user->name}}</span>
+                                </div>
+                                <p class="card-text text-black-50 mb-1">{!! Str::limit($item->content ?? '', 200) !!}</p>
+                            </div>
+                            <div class="card-footer py-3 bg-white text-muted">
+                                <div class="d-flex justify-content-between align-items-center w-100">
+                                    <span class="badge bg-{{ $item->status->color() }}">
+                                        {{ $item->status->label() }}
+                                    </span>
+                                    <div class="d-flex align-items-center gap-2">
+                                        @can('admin.news.edit')
+                                            <a href="{{ route('admin.news.edit', $item) }}"
+                                            class="btn btn-sm btn-primary"
+                                            title="Editar">
+                                                <i class="bi bi-pencil-fill"></i>
+                                            </a>
+                                        @endcan
+
+                                        @can('admin.news.destroy')
+                                            <form action="{{ route('admin.news.destroy', $item) }}"
+                                                method="POST" class="m-0 p-0">
+                                                @csrf
+                                                @method('DELETE')
+                                                <button class="btn btn-sm btn-danger"
+                                                        onclick="return confirm('¿Eliminar esta noticia?')"
+                                                        title="Eliminar">
+                                                    <i class="bi bi-trash3-fill"></i>
+                                                </button>
+                                            </form>
+                                        @endcan
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -85,7 +123,6 @@
                     <p class="text-muted text-center mt-3">No se encontraron resultados.</p>
                 @endforelse
             </div>
-            {{-- 📄 Paginación --}}
             <div class="mt-4">
                 {{ $items->links() }}
             </div>

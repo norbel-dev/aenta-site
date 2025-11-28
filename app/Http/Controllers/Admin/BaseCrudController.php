@@ -8,6 +8,7 @@ use Illuminate\Support\Str;
 use App\Traits\HasImageUpload;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Auth;
+use Mews\Purifier\Facades\Purifier;
 
 abstract class BaseCrudController extends BaseController
 {
@@ -45,6 +46,11 @@ abstract class BaseCrudController extends BaseController
             $paths = $this->uploadImage($request->file('image'), $this->folder);
         }
 
+        if ($request->content){
+            $request->merge([
+                'content' => Purifier::clean($request->content)
+            ]);
+        }
         $data = $this->fillableData($request);
         $data['image'] = $paths['image'];
         $data['thumbnail'] = $paths['thumbnail'];
@@ -84,6 +90,11 @@ abstract class BaseCrudController extends BaseController
             $paths = $this->uploadImage($request->file('image'), $this->folder);
         }
 
+        if ($request->content){
+            $request->merge([
+                'content' => Purifier::clean($request->content)
+            ]);
+        }
         $data = $this->fillableData($request);
         $data['image'] = $paths['image'];
         $data['thumbnail'] = $paths['thumbnail'];
