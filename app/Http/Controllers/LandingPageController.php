@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Enums\Status;
 use App\Models\Article;
 use App\Models\Center;
 use App\Models\Convocatory;
@@ -20,7 +21,7 @@ class LandingPageController extends Controller
         $centros = Center::all();
         $convocatorias = Convocatory::latest()->take(3)->get();
         $eventos = Event::latest()->take(3)->get();
-        $headers = Header::all();
+        $headers = Header::where('status', Status::EDIT_PUBLISHED)->get();
         $links = Link::all();
         $noticias = News::latest()->take(3)->get();
         $servicios = Service::latest()->take(3)->get();

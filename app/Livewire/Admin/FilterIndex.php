@@ -22,9 +22,16 @@ class FilterIndex extends Component
 
     public function mount(string $model, string $routePrefix = '')
     {
+        $user = User::find(Auth::id());
         $this->model = $model;
         $this->routePrefix = $routePrefix;
-        $this->filterable = $model::$filterable ?? [];
+        $base = $model::$filterable ?? [];
+        if ($user->isAdmin() || $user->isSuperAdmin()){
+            $admin = $model::$filterableAdmin ?? [];
+            $this->filterable = array_merge($base, $admin);
+        } else {
+            $this->filterable = $base;
+        }
 
         // Si el filterable define selects con 'enum', auto-carga opciones
         foreach ($this->filterable as $field => &$meta) {

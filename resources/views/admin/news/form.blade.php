@@ -3,7 +3,7 @@
 @section('title', $item->exists ? 'Edit News' : 'Create News')
 
 @section('content_header')
-    <h1>Edit News</h1>
+    <h1>{{$item->exists ? 'Edit News' : 'Create News'}}</h1>
 @endsection
 
 @section('css')

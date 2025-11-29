@@ -27,19 +27,18 @@ class News extends Model
             'type' => 'text',
             'label' => 'Título',
         ],
-        // 'published_at' => [
-        //     'type' => 'date',
-        //     'label' => 'Fecha de publicación',
-        // ],
-        'autor' => [
-            'type' => 'relation',
-            'label' => 'Autor',
-            // no es necesario poner relation/target para autor porque el componente lo trata como user.name
-        ],
         'status' => [
             'type' => 'select',
             'label' => 'Estado',
             'enum' => Status::class, // el componente cargará options vía enum::options()
+        ],
+    ];
+
+    public static array $filterableAdmin = [
+        'autor' => [
+            'type' => 'relation',
+            'label' => 'Autor',
+            // no es necesario poner relation/target para autor porque el componente lo trata como user.name
         ],
     ];
 

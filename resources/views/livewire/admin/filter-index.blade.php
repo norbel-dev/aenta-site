@@ -49,11 +49,11 @@
         <div class="card-body">
             <div class="d-flex justify-content-between align-items-center w-100">
                 @can($routePrefix . '.create')
-                    <a href="{{ route($routePrefix . '.create') }}" class="btn btn-primary mb-3" title="Crear Noticia"><i class="bi bi-plus-circle-fill"></i></a>
+                    <a href="{{ route($routePrefix . '.create') }}" class="btn btn-primary" title="Crear Noticia"><i class="bi bi-plus-circle-fill"></i></a>
                 @endcan
-                <div class="d-flex align-items-center gap-3">
+                {{-- <div class="d-flex align-items-center gap-3"> --}}
                     {{ $items->links() }}
-                </div>
+                {{-- </div> --}}
             </div>
             <div class="row g-4">
                 @forelse ($items as $item)

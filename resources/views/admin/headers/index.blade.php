@@ -7,17 +7,19 @@
 @endsection
 
 @section('css')
+<link href="{{ URL::asset('plugins/jquery-ui-1.14.1.custom/jquery-ui.min.css') }}" rel="stylesheet" />
+<link href="{{ URL::asset('css/datepicker.css') }}" rel="stylesheet" />
 <style>
     .card-img-top-a{
-        max-height:48.44% !important;
-        height:48.44% !important;
+        max-height:25% !important;
+        height:25% !important;
     }
     .card-img-top{
         height: 100%;
     }
     .card.dim-card{
-        max-height: 578px;
-        height: 578px;
+        max-height: 80vh;
+        height: 80vh;
     }
     .card-text.text-black-50{
         max-height: 82px;
@@ -26,43 +28,22 @@
 @endsection
 
 @section('content')
-<div class="card">
-    <div class="card-body">
-        @can('admin.headers.create')
-            <a href="{{ route('admin.headers.create') }}" class="btn btn-primary mb-3">Add New</a>
-        @endcan
-        <div class="row g-4 mt-4">
-            @foreach($headers as $header)
-                <div class="col-md-4">
-                    <div class="card dim-card hover-effect border-0">
-                        @if($header->thumbnail)
-                        <a class="card-img-top-a" href="{{route('admin.headers.show', $header)}}">
-                            <img class="card-img-top" src="{{ asset('storage/'.$header->thumbnail) }}" alt="Card image cap">
-                        </a>
-                        @endif
-                        <div class="card-body">
-                            <h4 class="card-title fw-bold mb-2"><a href="{{route('admin.headers.show', $header)}}">{{ $header->title }}</a></h4>
-                            <p class="mb-2 card-title-sub text-uppercase fw-normal ls1"><a href="{{route('admin.headers.show', $header)}}" class="text-black-50">{{$header->published_at}}</a></p>
-                            <div class="rating-stars mb-2"><i class="icon-star3"></i><i class="icon-star3"></i><i class="icon-star3"></i><i class="icon-star3"></i><i class="icon-star-half-full"></i> <span>otra cosa</span></div>
-                            <p class="card-text text-black-50 mb-1">{{ Str::limit($header->content, 200) }}</p>
-                        </div>
-                        <div class="card-footer py-3 d-flex justify-content-between align-items-center bg-white text-muted">
-                            <span class="badge bg-{{ $header->status->color() }}">{{ $header->status->label() }}</span>
-                            @can('admin.headers.edit')
-                                <a href="{{ route('admin.headers.edit', $header) }}" class="btn btn-sm btn-primary">Editar</a>
-                            @endcan
-                            @can('admin.headers.destroy')
-                                <form action="{{ route('admin.headers.destroy', $header) }}" method="POST" style="display:inline;">
-                                    @csrf
-                                    @method('DELETE')
-                                    <button class="btn btn-sm btn-danger" onclick="return confirm('¿Eliminar esta header?')">Eliminar</button>
-                                </form>
-                            @endcan
-                        </div>
-                    </div>
-                </div>
-            @endforeach
-        </div>
-    </div>
-</div>
+    @livewire('admin.filter-index', [
+        'model' => App\Models\Header::class,
+        'routePrefix' => 'admin.headers'
+    ])
+@endsection
+
+@section('js')
+    <script src="{{ URL::asset('plugins/jquery-ui-1.14.1.custom/jquery-ui.min.js') }}"></script>
+    <script src="{{ URL::asset('js/datepicker.js') }}"></script>
+    <script src="{{ URL::asset('js/main.js') }}"></script>
+    <script>
+        $(document).ready(function() {
+            let minDate = new Date();
+            minDate.setFullYear(minDate.getFullYear() - 1);
+            initializeDatePicker(minDate);
+            dateOnChange();
+        });
+    </script>
 @endsection

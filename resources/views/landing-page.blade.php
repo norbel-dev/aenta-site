@@ -120,30 +120,25 @@
 
         <div id="imageCarousel" class="carousel slide" data-bs-ride="carousel">
             <div class="carousel-inner">
-                <div class="carousel-item active">
-                    <img src="{{ asset('img/ciclotron.png') }}" class="d-block" alt="...">
-                    <div class="carousel-caption d-none d-md-block">
-                        <h5>First slide label</h5>
+                @forelse ($headers as $item)
+                    <div class="carousel-item {{ $loop->first ? 'active' : '' }}">
+                        <img src="{{ asset('storage/' . $item->image) }}" class="d-block w-100" alt="...">
+                        @if($item->title || $item->subtitle)
+                            <div class="carousel-caption d-none d-md-block">
+                                @if($item->title)
+                                    <h5>{{ $item->title }}</h5>
+                                @endif
+                            </div>
+                        @endif
                     </div>
-                </div>
-                <div class="carousel-item">
-                    <img src="{{ asset('img/otoz.png') }}" class="d-block" alt="...">
-                    <div class="carousel-caption d-none d-md-block">
-                        <h5>Second slide label</h5>
+                @empty
+                    <div class="carousel-item active">
+                        {{-- <img src="{{ asset('img/default-header.jpg') }}" class="d-block w-100" alt="..."> --}}
+                        <div class="carousel-caption d-none d-md-block">
+                            <h5>No hay imágenes para el carrusel.</h5>
+                        </div>
                     </div>
-                </div>
-                <div class="carousel-item">
-                    <img src="{{ asset('img/irradiacion.png') }}" class="d-block" alt="...">
-                    <div class="carousel-caption d-none d-md-block">
-                        <h5>Third slide label</h5>
-                    </div>
-                </div>
-                <div class="carousel-item">
-                    <img src="{{ asset('img/united-nation.png') }}" class="d-block" alt="...">
-                    <div class="carousel-caption d-none d-md-block">
-                        <h5>Four slide label</h5>
-                    </div>
-                </div>
+                @endforelse
             </div>
             <button class="carousel-control-prev" type="button" data-bs-target="#imageCarousel" data-bs-slide="prev">
                 <span class="carousel-control-prev-icon" aria-hidden="true"></span>

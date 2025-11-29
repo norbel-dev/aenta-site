@@ -13,11 +13,33 @@ class Header extends Model
 
     protected $fillable = [
         'title',
+        'slug',
         'content',
         'image',
+        'thumbnail',
         'status',
         'published_at',
         'user_id',
+    ];
+
+    public static array $filterable = [
+        'title' => [
+            'type' => 'text',
+            'label' => 'Título',
+        ],
+        'status' => [
+            'type' => 'select',
+            'label' => 'Estado',
+            'enum' => Status::class, // el componente cargará options vía enum::options()
+        ],
+    ];
+
+    public static array $filterableAdmin = [
+        'autor' => [
+            'type' => 'relation',
+            'label' => 'Autor',
+            // no es necesario poner relation/target para autor porque el componente lo trata como user.name
+        ],
     ];
 
     protected function casts(): array
