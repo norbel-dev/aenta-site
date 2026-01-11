@@ -6,6 +6,8 @@ use App\Enums\Status;
 use App\Http\Controllers\Controller;
 use App\Models\Convocatory;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Str;
 use Illuminate\Validation\Rules\Enum;
 
 class ConvocatoryController extends Controller
@@ -28,7 +30,16 @@ class ConvocatoryController extends Controller
             'date' => 'required|date',
             'date_end' => 'nullable|date|after_or_equal:date',
             'status' => 'required', new Enum(Status::class),
+            'description' => 'nullable|string',
+            'archivo'     => 'nullable|file|mimes:pdf,mp3,wav,mp4,mov,avi|max:10240',
         ]);
+
+
+        $data = $this->fillableData($request);
+        $data['image'] = $paths['image'];
+        $data['thumbnail'] = $paths['thumbnail'];
+        $data['slug'] = Str::slug($request['title']);
+        $data['user_id'] = Auth::id();
 
         Convocatory::create($request->all());
         return redirect()->route('admin.convocatories.index')->with('success', 'Convocatory created successfully.');
@@ -51,6 +62,8 @@ class ConvocatoryController extends Controller
             'date' => 'required|date',
             'date_end' => 'nullable|date|after_or_equal:date',
             'status' => 'required', new Enum(Status::class),
+            'description' => 'nullable|string',
+            'archivo'     => 'nullable|file|mimes:pdf,mp3,wav,mp4,mov,avi|max:10240',
         ]);
         $convocatory->update($request->all());
         return redirect()->route('admin.convocatories.index')->with('success', 'Convocatory updated successfully.');
@@ -60,5 +73,10 @@ class ConvocatoryController extends Controller
     {
         $convocatory->delete();
         return redirect()->route('admin.convocatories.index')->with('success', 'Convocatory deleted successfully.');
+    }
+
+    protected function fillableData(Request $request): array
+    {
+        return $request->only((new Convocatory())->getFillable());
     }
 }

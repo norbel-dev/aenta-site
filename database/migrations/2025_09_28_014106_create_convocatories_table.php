@@ -17,7 +17,9 @@ return new class extends Migration
             $table->id();
             $table->string('title');
             $table->string('slug');
+            $table->text('description')->nullable();
             $table->enum('media', Media::cases())->default(Media::PDF);
+            $table->string('archivo')->nullable();
             $table->date('date');
             $table->date('date_end')->nullable();
             $table->enum('status', Status::cases())->default(status::EDIT_DRAFT);

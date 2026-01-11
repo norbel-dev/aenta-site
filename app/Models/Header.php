@@ -38,9 +38,48 @@ class Header extends Model
         'autor' => [
             'type' => 'relation',
             'label' => 'Autor',
-            // no es necesario poner relation/target para autor porque el componente lo trata como user.name
         ],
     ];
+
+    public static array $dateRangeFields = [
+        'published_at',
+    ];
+
+    public function getCardSchema()
+    {
+        return [
+            [
+                'field' => 'image',
+                'label' => null,
+                'type' => 'image',
+                'order' => 1
+            ],
+            [
+                'field' => 'title',
+                'label' => null,
+                'type' => 'title',
+                'order' => 2
+            ],
+            [
+                'field' => 'published_at',
+                'label' => 'Publicado',
+                'type' => 'date',
+                'order' => 3
+            ],
+            [
+                'field' => 'user.name',
+                'label' => 'Autor',
+                'type' => 'relation',
+                'order' => 4
+            ],
+            [
+                'field' => 'content',
+                'label' => 'Contenido',
+                'type' => 'html',
+                'order' => 5
+            ],
+        ];
+    }
 
     protected function casts(): array
     {

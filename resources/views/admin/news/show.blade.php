@@ -23,8 +23,8 @@
 @section('content')
     <div class="card dim-card hover-effect border-0">
         <div class="card-img-top-a d-flex justify-content-center p-1">
-            @if($item->thumbnail)
-                <img class="card-img-top rounded" src="{{ asset('storage/'.$item->thumbnail) }}" alt="Card image cap">
+            @if($item->image)
+                <img class="card-img-top rounded" src="{{ asset('storage/'.$item->image) }}" alt="Card image cap">
             @else
                 <i class="bi bi-image-fill text-secondary rounded" style="font-size: 7rem;"></i>
             @endif
@@ -42,8 +42,10 @@
                 </span>
             </div>
             <div class="mb-1">
-                <i class="bi bi-person me-1"></i>
-                <span>{{$item->user->name}}</span>
+                <span class="text-black-50">
+                    <i class="bi bi-person me-1"></i>
+                    {{$item->user->name}}
+                </span>
             </div>
             <p class="card-text text-black-50 mb-1 text-break" style="white-space: pre-line;">
                 {!! $item->content !!}

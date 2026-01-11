@@ -17,6 +17,7 @@ class FilterIndex extends Component
     public string $routePrefix = '';
     public array $filters = [];
     public array $filterable = [];
+    public array $dateRangeFields = [];
 
     protected $paginationTheme = 'bootstrap';
 
@@ -32,6 +33,7 @@ class FilterIndex extends Component
         } else {
             $this->filterable = $base;
         }
+        $this->dateRangeFields = $model::$dateRangeFields ?? ['created_at'];
 
         // Si el filterable define selects con 'enum', auto-carga opciones
         foreach ($this->filterable as $field => &$meta) {
@@ -88,13 +90,33 @@ class FilterIndex extends Component
 
             // 🔥 Filtro adicional: rango de fechas (from / to)
             if ($this->filters['published_from'] || $this->filters['published_to']) {
-                if ($this->filters['published_from']) {
-                    $query->whereDate('published_at', '>=', date('Y-m-d', strtotime($this->filters['published_from'])));
-                }
+                $from = $this->filters['published_from'];
+                $to   = $this->filters['published_to'];
 
-                if ($this->filters['published_to']) {
-                    $query->whereDate('published_at', '<=', date('Y-m-d', strtotime($this->filters['published_to'])));
-                }
+                $query->where(function($q) use ($from, $to) {
+                    foreach ($this->dateRangeFields as $field) {
+
+                        // Si vienen ambos
+                        if ($from && $to) {
+                            $q->orWhereBetween($field, [date('Y-m-d', strtotime($from)), date('Y-m-d', strtotime($to))]);
+                        }
+                        // Solo desde
+                        elseif ($from) {
+                            $q->orWhere($field, '>=', date('Y-m-d', strtotime($from)));
+                        }
+                        // Solo hasta
+                        elseif ($to) {
+                            $q->orWhere($field, '<=', date('Y-m-d', strtotime($to)));
+                        }
+                    }
+                });
+                // if ($this->filters['published_from']) {
+                //     $query->whereDate('published_at', '>=', date('Y-m-d', strtotime($this->filters['published_from'])));
+                // }
+
+                // if ($this->filters['published_to']) {
+                //     $query->whereDate('published_at', '<=', date('Y-m-d', strtotime($this->filters['published_to'])));
+                // }
             }else if ($type === 'relation') {
                 if ($field === 'autor') {
                     $query->whereHas('user', function (Builder $q) use ($value) {

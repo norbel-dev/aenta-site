@@ -58,52 +58,81 @@
             <div class="row g-4">
                 @forelse ($items as $item)
                     <div class="col-md-4">
+                        @php
+                            $schema = collect($item->getCardSchema())->sortBy('order');
+                        @endphp
                         <div class="card dim-card hover-effect border-0">
                             <div class="card-img-top-a d-flex justify-content-center p-1">
-                                @if($item->thumbnail)
-                                    <a href="{{route($routePrefix . '.show', $item)}}">
-                                        <img class="card-img-top rounded" src="{{ asset('storage/'.$item->thumbnail) }}" alt="Card image cap">
-                                    </a>
-                                @else
-                                    <a class="d-flex justify-content-center align-items-middle" href="{{route($routePrefix . '.show', $item)}}">
-                                        <i class="bi bi-image-fill text-secondary rounded" style="font-size: 7rem;"></i>
-                                    </a>
-                                @endif
+                                @foreach ($schema as $row)
+                                    @php
+                                        $value = data_get($item, $row['field']);
+                                    @endphp
+                                    @if ($row['type'] === 'image' && $value)
+                                        <a href="{{route($routePrefix . '.show', $item)}}">
+                                            <img class="card-img-top rounded" src="{{ asset('storage/'.$value) }}" alt="Card image cap">
+                                        </a>
+                                    @elseif ($row['type'] === 'image' && !$value)
+                                        <a class="d-flex justify-content-center align-items-middle" href="{{route($routePrefix . '.show', $item)}}">
+                                            <i class="bi bi-image-fill text-secondary rounded" style="font-size: 7rem;"></i>
+                                        </a>
+                                    @endif
+                                @endforeach
                             </div>
+
                             <div class="card-body d-flex flex-column">
-                                <div class="mb-1">
-                                    <h4 class="card-title fw-bold">
-                                        <a href="{{route($routePrefix . '.show', $item)}}">{{ $item->title ?? '(Sin título)' }}</a>
-                                    </h4>
-                                </div>
-                                <div class="mb-1">
-                                    <span class="text-black-50">
-                                        <i class="bi bi-calendar-date me-1"></i>
-                                        {{ isset($item->published_at) ? \Carbon\Carbon::parse($item->published_at)->format('d-m-Y') : '---' }}
-                                    </span>
-                                </div>
-                                <div class="mb-1">
-                                    <i class="bi bi-person me-1"></i>
-                                    <span>{{$item->user->name}}</span>
-                                </div>
-                                <p class="card-text text-black-50 mb-1">{!! Str::limit($item->content ?? '', 200) !!}</p>
+                                @foreach ($schema as $row)
+                                    @php
+                                        $value = data_get($item, $row['field']);
+                                    @endphp
+                                    <div class="mb-1">
+                                    @if ($row['type'] === 'title')
+                                        <h5 class="card-title fw-bold"><a href="{{route($routePrefix . '.show', $item)}}">{{ $value ? $value : ''}}</a></h5>
+                                    @endif
+
+                                    @if ($row['type'] === 'date')
+                                        <span class="text-black-50">
+                                            <i class="bi bi-calendar-date me-1"></i>
+                                            {{ $value ? \Carbon\Carbon::parse($value)->format('d-m-Y') : '---' }}
+                                        </span>
+                                    @endif
+
+                                    @if ($row['type'] === 'relation')
+                                        <span class="text-black-50">
+                                            <i class="bi bi-person me-1"></i>
+                                            {{ $value ? $value : '---' }}
+                                        </span>
+                                    @endif
+
+                                    @if ($row['type'] === 'location')
+                                        <span class="text-black-50">
+                                            <i class="bi bi-geo-alt me-1"></i>
+                                            {{ $value ? $value : '---' }}
+                                        </span>
+                                    @endif
+
+                                    @if ($row['type'] === 'html')
+                                        <p class="card-text text-black-50 mb-1">{!! Str::limit($value ?? '', 200) !!}</p>
+                                    @endif
+                                    </div>
+                                @endforeach
                             </div>
+
                             <div class="card-footer py-3 bg-white text-muted">
                                 <div class="d-flex justify-content-between align-items-center w-100">
                                     <span class="badge bg-{{ $item->status->color() }}">
                                         {{ $item->status->label() }}
                                     </span>
                                     <div class="d-flex align-items-center gap-2">
-                                        @can('admin.news.edit')
-                                            <a href="{{ route('admin.news.edit', $item) }}"
+                                        @can($routePrefix . '.edit')
+                                            <a href="{{ route($routePrefix . '.edit', $item) }}"
                                             class="btn btn-sm btn-primary"
                                             title="Editar">
                                                 <i class="bi bi-pencil-fill"></i>
                                             </a>
                                         @endcan
 
-                                        @can('admin.news.destroy')
-                                            <form action="{{ route('admin.news.destroy', $item) }}"
+                                        @can($routePrefix . '.destroy')
+                                            <form action="{{ route($routePrefix . '.destroy', $item) }}"
                                                 method="POST" class="m-0 p-0">
                                                 @csrf
                                                 @method('DELETE')

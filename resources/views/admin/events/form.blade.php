@@ -3,10 +3,11 @@
 @section('title', $item->exists ? 'Edit Event' : 'Create Event')
 
 @section('content_header')
-    <h1>Edit Event</h1>
+    <h1>{{$item->exists ? 'Edit Event' : 'Create Event'}}</h1>
 @endsection
 
 @section('css')
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.20/summernote-bs5.min.css" rel="stylesheet">
     <link href="{{ URL::asset('css/datepicker.css') }}" rel="stylesheet" />
 @endsection
 
@@ -29,51 +30,89 @@
         </div>
 
         <div class="mt-3">
-            <label for="content">Content</label>
-            <textarea name="content" class="form-control" required>{{ old('content', $item->content) }}</textarea>
-            @error('content')
+            <label for="description">Description</label>
+            <textarea name="description" class="form-control" required>{{ old('description', $item->description) }}</textarea>
+            @error('description')
                 <small class="text-danger">{{$message}}</small>
             @enderror
         </div>
 
-        <div class="mt-3">
-            <label for="image">Image</label>
-            <input type="file" name="image" id="image" class="form-control" accept="image/*">
+        <div class="row g-4 mt-1">
+            <div class="col-md-4">
+                <div class="form-group mt-3">
+                    <label for="image">Image</label>
+                    <input type="file" name="image" id="image" class="form-control" accept="image/*">
+                    @php
+                        $currentImage = $item->exists ? $item->image : null;
+                        $preview = $currentImage
+                            ? asset('storage/' . $currentImage)
+                            : null;
+                    @endphp
 
-            <div class="mt-2">
-                <img id="preview"
-                     src="{{ $item->image ? asset('storage/'.$item->image) : '' }}"
-                     style="max-width: 200px; border-radius: 10px; {{ $item->image ? '' : 'display:none;' }}">
-            </div>
-        </div>
-
-        <div class="form-group mt-3">
-            <label for="status">Status</label>
-            <div class="col-sm-4">
-                <div class="input-group">
-                    <select name="status" class="form-control">
-                        @foreach(App\Enums\Status::cases() as $status)
-                            <option value="{{ $status->value }}" @selected(old('status') == $status->value || ($item->exists && $item->status->value == $status->value))>
-                                {{ $status->label() }}
-                            </option>
-                        @endforeach
-                    </select>
+                    <div class="mb-3 text-center">
+                        @if ($preview)
+                            <img id="preview"
+                                src="{{ $preview }}"
+                                style="max-width:200px;border-radius:10px;">
+                        @else
+                            <i id="preview" class="bi bi-image-fill text-secondary" style="font-size: 7rem;"></i>
+                        @endif
+                    </div>
                 </div>
             </div>
-        </div>
 
-        <div class="form-group mt-3">
-            <label for="published_at">Published at</label>
-            <div class="col-sm-4">
-                <div class="input-group">
-                    <input type="text" name="published_at" class="form-control" placeholder="dd/mm/yyyy" id="datepicker-autoclose"
-                        value="{{null !== old('published_at') ? date('d/m/Y', strtotime(old('published_at'))) : date('d/m/Y', strtotime($item->published_at))}}" required>
-                    <span class="input-group-addon bg-primary b-0 text-white"><i class="fas fa-fw fa-calendar"></i></span>
-                </div><!-- input-group -->
+            <div class="col-md-4">
+                <div class="form-group mt-3">
+                    <label for="status">Status</label>
+                    <div class="input-group">
+                        <select name="status" class="form-control">
+                            @foreach(App\Enums\Status::cases() as $status)
+                                <option value="{{ $status->value }}" @selected(old('status') == $status->value || ($item->exists && $item->status->value == $status->value))>
+                                    {{ $status->label() }}
+                                </option>
+                            @endforeach
+                        </select>
+                    </div>
+                </div>
             </div>
-            @error('published_at')
-                <small class="text-danger">{{$message}}</small>
-            @enderror
+
+            <div class="col-md-4">
+                <div class="form-group mt-3">
+                    <label for="event_date">Date</label>
+                    <div class="input-group align-items-center">
+                        <input type="text" name="event_date" class="form-control campo-fecha" placeholder="dd-mm-yyyy"
+                            value="{{null !== old('event_date') ? date('d-m-Y', strtotime(old('event_date'))) : date('d-m-Y', strtotime($item->event_date))}}" required>
+                        <i class="bi bi-calendar-date ml-1"></i>
+                    </div>
+                    @error('event_date')
+                        <small class="text-danger">{{$message}}</small>
+                    @enderror
+                </div>
+            </div>
+
+            <div class="col-md-4">
+                <div class="form-group mt-3">
+                    <label for="event_date_end">Date end</label>
+                    <div class="input-group align-items-center">
+                        <input type="text" name="event_date_end" class="form-control campo-fecha" placeholder="dd-mm-yyyy"
+                            value="{{null !== old('event_date_end') ? date('d-m-Y', strtotime(old('event_date_end'))) : date('d-m-Y', strtotime($item->event_date_end))}}" required>
+                        <i class="bi bi-calendar-date ml-1"></i>
+                    </div>
+                    @error('event_date_end')
+                        <small class="text-danger">{{$message}}</small>
+                    @enderror
+                </div>
+            </div>
+
+            <div class="col-md-4">
+                <div class="form-group mt-3">
+                    <label for="location">Location</label>
+                    <input type="text" name="location" value="{{ old('location', $item->location) }}" class="form-control" required>
+                    @error('location')
+                        <small class="text-danger">{{$message}}</small>
+                    @enderror
+                </div>
+            </div>
         </div>
 
         <button type="submit" class="btn btn-primary mt-3">
@@ -84,23 +123,25 @@
 @endsection
 
 @section('js')
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.20/summernote-bs5.min.js"></script>
     <script src="{{ URL::asset('js/datepicker.js') }}"></script>
+    <script src="{{ URL::asset('js/main.js') }}"></script>
     <script>
-        document.getElementById('image').addEventListener('change', (e) => {
-            const file = e.target.files[0];
-            const preview = document.getElementById('preview');
-            if (!file) return;
-            const reader = new FileReader();
-            reader.onload = (ev) => {
-                preview.src = ev.target.result;
-                preview.style.display = 'block';
-            };
-            reader.readAsDataURL(file);
-        });
-        jQuery('#datepicker-autoclose').datepicker({
-            autoclose: true,
-            format: "dd/mm/yyyy",
-            todayHighlight: true
+        $(document).ready(function() {
+            imagePreview();
+            let maxDate = new Date();
+            maxDate.setFullYear(maxDate.getFullYear() + 1);
+            initializeDatePicker(new Date(), maxDate);
+
+            $('textarea[name=description]').summernote({
+                height: 300,
+                toolbar: [
+                    ['edit', ['undo', 'redo']],
+                    ['style', ['bold', 'italic', 'underline']],
+                    ['para', ['ul', 'ol']],
+                    ['insert', ['link']]
+                ]
+            });
         });
     </script>
 @endsection
