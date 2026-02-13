@@ -128,10 +128,10 @@ class DatabaseSeeder extends Seeder
 
         $users = User::where('id', '>', 1)->get();
 
-        $this->CreateArticles();
+        /* $this->CreateArticles();
         $this->CreateCenters();
         $this->CreateEvents();
-        $this->CreateNews($users);
+        $this->CreateNews($users); */
     }
 
     function CreateNews($users){
