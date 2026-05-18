@@ -17,15 +17,14 @@ class LandingPageController extends Controller
 {
     public function index()
     {
-        $novedoso = Article::latest()->take(3)->get();
+        $novedoso = Article::latest()->where('status', Status::EDIT_PUBLISHED)->take(5)->get();
         $centros = Center::all();
-        $convocatorias = Convocatory::latest()->take(3)->get();
-        $eventos = Event::latest()->take(3)->get();
+        $convocatorias = Convocatory::latest()->where('status', Status::EDIT_PUBLISHED)->take(5)->get();
+        $eventos = Event::latest()->where('status', Status::EDIT_PUBLISHED)->take(5)->get();
         $headers = Header::where('status', Status::EDIT_PUBLISHED)->get();
         $links = Link::all();
-        $noticias = News::latest()->take(3)->get();
-        $servicios = Service::latest()->take(3)->get();
-
+        $noticias = News::latest()->where('status', Status::EDIT_PUBLISHED)->take(5)->get();
+        $servicios = Service::latest()->take(5)->get();
         return view('landing-page', compact('novedoso', 'centros', 'convocatorias', 'eventos', 'headers', 'links', 'noticias', 'servicios'));
     }
 }

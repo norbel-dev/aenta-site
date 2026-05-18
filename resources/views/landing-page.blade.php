@@ -50,6 +50,9 @@
             max-height: 40px;
             max-width: 40px;
         }
+        .card-link{
+            text-decoration: none;
+        }
         .carousel-item img {
             max-height: 250px;
             width: 100%;
@@ -170,15 +173,21 @@
             <div class="col-md-4">
                 <div class="card content-card">
                     <h5 class="card-title">Noticias</h5>
+                    @if(isset($noticias) && $noticias->count() > 3)
+                    <ul class="list-group list-group-flush">
+                        @for ($i=0; $i < 3; $i++)
+                            <li class="list-group-item"><a href="{{ route ('show_news', $noticias[$i]) }}" class="card-link">{{ $noticias[$i]->title }}</a></li>
+                        @endfor
+                    </ul>
+                        <a href="{{ route ('news') }}" class="mt-auto">mostrar más...</a>
+                    @else
                     <ul class="list-group list-group-flush">
                         @forelse($noticias as $item)
-                            <li class="list-group-item">{{ $item->title }}</li>
+                            <li class="list-group-item"><a href="{{ route ('show_news', $item) }}" class="card-link">{{ $item->title }}</a></li>
                         @empty
                             <li class="list-group-item">No hay noticias.</li>
                         @endforelse
                     </ul>
-                    @if(isset($noticias) && $noticias->count() > 3)
-                        <a href="#" class="card-link mt-auto">mostrar más...</a>
                     @endif
                 </div>
             </div>

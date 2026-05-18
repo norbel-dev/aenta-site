@@ -15,9 +15,9 @@ class HomeController extends Controller
     {
         return view('home', [
             'center' => Center::first(),
-            'news' => News::where('status', Status::EDIT_PUBLISHED)->latest()->take(3)->get(),
-            'events' => Event::where('status', Status::EDIT_PUBLISHED)->orderBy('event_date', 'asc')->take(3)->get(),
-            'articles' => Article::where('status', Status::EDIT_PUBLISHED)->latest()->take(2)->get(),
+            'news' => News::where('status', Status::EDIT_PUBLISHED)->latest()->take(5)->get(),
+            'events' => Event::where('status', Status::EDIT_PUBLISHED)->orderBy('event_date', 'asc')->take(5)->get(),
+            'articles' => Article::where('status', Status::EDIT_PUBLISHED)->latest()->take(5)->get(),
         ]);
     }
 
@@ -58,6 +58,6 @@ class HomeController extends Controller
 
     public function show_news(News $news)
     {
-        return view('admin.news.show', compact('news'));
+        return view('landing.news.show', compact('news'));
     }
 }
