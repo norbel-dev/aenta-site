@@ -9,7 +9,7 @@ use App\Models\Event;
 use App\Models\News;
 use Illuminate\Support\Facades\Route;
 
-Route::get('/', [LandingPageController::class, 'index']);
+Route::get('/', [LandingPageController::class, 'index'])->name('index');
 
 // Route::get('/', function () {
 //     return view('home');

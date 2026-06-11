@@ -53,7 +53,7 @@ class HomeController extends Controller
 
     public function news()
     {
-        return view('admin.news.show', ['news' => News::where('status', Status::EDIT_PUBLISHED)->latest()->take(5)->get()]);
+        return view('landing.news.index', ['news' => News::where('status', Status::EDIT_PUBLISHED)->latest()->paginate(9)]);
     }
 
     public function show_news(News $news)

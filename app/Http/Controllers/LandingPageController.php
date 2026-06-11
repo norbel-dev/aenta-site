@@ -25,6 +25,6 @@ class LandingPageController extends Controller
         $links = Link::all();
         $noticias = News::latest()->where('status', Status::EDIT_PUBLISHED)->take(5)->get();
         $servicios = Service::latest()->take(5)->get();
-        return view('landing-page', compact('novedoso', 'centros', 'convocatorias', 'eventos', 'headers', 'links', 'noticias', 'servicios'));
+        return view('landing-index', compact('novedoso', 'centros', 'convocatorias', 'eventos', 'headers', 'links', 'noticias', 'servicios'));
     }
 }
