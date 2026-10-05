@@ -58,6 +58,8 @@ class HomeController extends Controller
 
     public function show_news(News $news)
     {
+        abort_unless($news->status === Status::EDIT_PUBLISHED, 404);
+
         return view('landing.news.show', compact('news'));
     }
 }

@@ -39,7 +39,7 @@
             <div class="mb-1">
                 <span class="text-black-50">
                     <i class="bi bi-person me-1"></i>
-                    {{$news->user->name}}
+                    {{ $news->user?->name ?? 'Autor no disponible' }}
                 </span>
             </div>
             <p class="card-text text-black-50 mb-1 text-break" style="white-space: pre-line;">

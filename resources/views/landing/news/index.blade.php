@@ -60,7 +60,7 @@
                                 <div class="mb-1">
                                     <span class="text-black-50">
                                         <i class="bi bi-person me-1"></i>
-                                        {{$item->user->name}}
+                                        {{ $item->user?->name ?? 'Autor no disponible' }}
                                     </span>
                                 </div>
                                 <div class="mb-1">
