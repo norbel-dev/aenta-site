@@ -45,38 +45,38 @@ class Header extends Model
         'published_at',
     ];
 
-    public function getCardSchema()
+    public function getCardSchema(): array
     {
         return [
             [
                 'field' => 'image',
                 'label' => null,
                 'type' => 'image',
-                'order' => 1
+                'order' => 1,
             ],
             [
                 'field' => 'title',
                 'label' => null,
                 'type' => 'title',
-                'order' => 2
+                'order' => 2,
             ],
             [
                 'field' => 'published_at',
                 'label' => 'Publicado',
                 'type' => 'date',
-                'order' => 3
+                'order' => 3,
             ],
             [
                 'field' => 'user.name',
                 'label' => 'Autor',
                 'type' => 'relation',
-                'order' => 4
+                'order' => 4,
             ],
             [
                 'field' => 'content',
                 'label' => 'Contenido',
                 'type' => 'html',
-                'order' => 5
+                'order' => 5,
             ],
         ];
     }
@@ -88,17 +88,19 @@ class Header extends Model
         ];
     }
 
-    static function rules(){
+    public static function rules(): array
+    {
         return [
             'title' => 'required|string|max:255',
             'content' => 'required|string',
             'image' => 'nullable|image|max:2048',
-            'status' => 'required', new Enum(Status::class),
+            'status' => ['required', new Enum(Status::class)],
             'published_at' => 'required|date',
         ];
     }
 
-    public function user(){
+    public function user()
+    {
         return $this->belongsTo(User::class);
     }
 }

@@ -43,7 +43,7 @@
             </div>
             <div class="mb-1">
                 <i class="bi bi-person me-1"></i>
-                <span>{{$item->user->name}}</span>
+                <span>{{ $item->user?->name ?? 'Autor no disponible' }}</span>
             </div>
             <p class="card-text text-black-50 mb-1 text-break" style="white-space: pre-line;">
                 {!! $item->content !!}
@@ -81,4 +81,3 @@
         </div>
     </div>
 @endsection
-

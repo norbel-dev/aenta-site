@@ -6,8 +6,8 @@ use App\Enums\Status;
 use App\Models\Article;
 use App\Models\Center;
 use App\Models\Event;
+use App\Models\Header;
 use App\Models\News;
-use Illuminate\Http\Request;
 
 class HomeController extends Controller
 {
@@ -55,6 +55,20 @@ class HomeController extends Controller
         abort_unless($event->status === Status::EDIT_PUBLISHED, 404);
 
         return view('landing.events.show', compact('event'));
+    }
+
+    public function headers()
+    {
+        return view('landing.headers.index', [
+            'headers' => Header::where('status', Status::EDIT_PUBLISHED)->latest()->paginate(9),
+        ]);
+    }
+
+    public function showHeader(Header $header)
+    {
+        abort_unless($header->status === Status::EDIT_PUBLISHED, 404);
+
+        return view('landing.headers.show', compact('header'));
     }
 
     public function news()

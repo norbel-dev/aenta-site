@@ -5,12 +5,18 @@
             <div class="carousel-inner">
                 @forelse ($headers as $item)
                     <div class="carousel-item {{ $loop->first ? 'active' : '' }}">
-                        <img src="{{ asset('storage/' . $item->image) }}" class="d-block w-100" alt="...">
-                        @if($item->title || $item->subtitle)
+                        <a href="{{ route('show_header', $item) }}">
+                            @if ($item->image)
+                                <img src="{{ asset('storage/' . $item->image) }}" class="d-block w-100" alt="{{ $item->title }}">
+                            @else
+                                <div class="d-flex justify-content-center align-items-center w-100 bg-secondary text-white" style="min-height: 20rem;">
+                                    {{ $item->title }}
+                                </div>
+                            @endif
+                        </a>
+                        @if($item->title)
                             <div class="carousel-caption d-none d-md-block">
-                                @if($item->title)
-                                    <h5>{{ $item->title }}</h5>
-                                @endif
+                                <h5>{{ $item->title }}</h5>
                             </div>
                         @endif
                     </div>

@@ -1,12 +1,7 @@
 <?php
 
-use App\Enums\Status;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\LandingPageController;
-use App\Models\Article;
-use App\Models\Center;
-use App\Models\Event;
-use App\Models\News;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', [LandingPageController::class, 'index'])->name('index');
@@ -34,6 +29,9 @@ Route::get('/center/{center}', [HomeController::class, 'show_center'])->name('sh
 
 Route::get('/event', [HomeController::class, 'events'])->name('events');
 Route::get('/event/{event}', [HomeController::class, 'showEvent'])->name('show_event');
+
+Route::get('/headers', [HomeController::class, 'headers'])->name('headers');
+Route::get('/headers/{header}', [HomeController::class, 'showHeader'])->name('show_header');
 
 Route::get('/news', [HomeController::class, 'news'])->name('news');
 Route::get('/news/{news}', [HomeController::class, 'show_news'])->name('show_news');

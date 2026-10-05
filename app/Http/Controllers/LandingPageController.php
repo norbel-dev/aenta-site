@@ -11,7 +11,6 @@ use App\Models\Header;
 use App\Models\Link;
 use App\Models\News;
 use App\Models\Service;
-use Illuminate\Http\Request;
 
 class LandingPageController extends Controller
 {
@@ -21,10 +20,11 @@ class LandingPageController extends Controller
         $centros = Center::all();
         $convocatorias = Convocatory::latest()->where('status', Status::EDIT_PUBLISHED)->take(5)->get();
         $eventos = Event::latest()->where('status', Status::EDIT_PUBLISHED)->take(5)->get();
-        $headers = Header::where('status', Status::EDIT_PUBLISHED)->get();
+        $headers = Header::where('status', Status::EDIT_PUBLISHED)->latest()->take(5)->get();
         $links = Link::all();
         $noticias = News::latest()->where('status', Status::EDIT_PUBLISHED)->take(5)->get();
         $servicios = Service::latest()->take(5)->get();
+
         return view('landing-index', compact('novedoso', 'centros', 'convocatorias', 'eventos', 'headers', 'links', 'noticias', 'servicios'));
     }
 }
