@@ -38,19 +38,15 @@ abstract class BaseCrudController extends BaseController
 
     public function store(Request $request)
     {
-        $validated = $request->validate($this->validationRules());
-        $request['published_at'] = date('Y-m-d', strtotime($request['published_at']));
+        $this->normalizeDateFields($request);
+        $request->validate($this->validationRules());
 
         $paths = ['image' => null, 'thumbnail' => null];
         if ($request->hasFile('image')) {
             $paths = $this->uploadImage($request->file('image'), $this->folder);
         }
 
-        if ($request->content){
-            $request->merge([
-                'content' => Purifier::clean($request->content)
-            ]);
-        }
+        $this->sanitizeRichText($request);
         $data = $this->fillableData($request);
         $data['image'] = $paths['image'];
         $data['thumbnail'] = $paths['thumbnail'];
@@ -77,9 +73,8 @@ abstract class BaseCrudController extends BaseController
     public function update(Request $request, $item)
     {
         $item = $this->resolveModel($item);
-        //dd($request['published_at']);
-        $request['published_at'] = date('Y-m-d', strtotime($request->published_at));
-        $validated = $request->validate($this->validationRules());
+        $this->normalizeDateFields($request);
+        $request->validate($this->validationRules());
         $paths = [
             'image' => $item->image,
             'thumbnail' => $item->thumbnail,
@@ -90,11 +85,7 @@ abstract class BaseCrudController extends BaseController
             $paths = $this->uploadImage($request->file('image'), $this->folder);
         }
 
-        if ($request->content){
-            $request->merge([
-                'content' => Purifier::clean($request->content)
-            ]);
-        }
+        $this->sanitizeRichText($request);
         $data = $this->fillableData($request);
         $data['image'] = $paths['image'];
         $data['thumbnail'] = $paths['thumbnail'];
@@ -131,6 +122,31 @@ abstract class BaseCrudController extends BaseController
     protected function fillableData(Request $request): array
     {
         return $request->only((new $this->model())->getFillable());
+    }
+
+    protected function normalizeDateFields(Request $request): void
+    {
+        foreach ($this->model::$dateRangeFields ?? [] as $field) {
+            $value = $request->input($field);
+
+            if (! is_string($value) || trim($value) === '') {
+                continue;
+            }
+
+            $timestamp = strtotime($value);
+            if ($timestamp !== false) {
+                $request->merge([$field => date('Y-m-d', $timestamp)]);
+            }
+        }
+    }
+
+    protected function sanitizeRichText(Request $request): void
+    {
+        foreach (['content', 'description'] as $field) {
+            if ($request->filled($field)) {
+                $request->merge([$field => Purifier::clean($request->input($field))]);
+            }
+        }
     }
 
     /**

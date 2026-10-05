@@ -49,6 +49,7 @@ class Event extends Model
 
     public static array $dateRangeFields = [
         'event_date',
+        'event_date_end',
     ];
 
     public function getCardSchema()
@@ -103,10 +104,13 @@ class Event extends Model
     {
         return [
             'status' => Status::class,
+            'event_date' => 'date',
+            'event_date_end' => 'date',
         ];
     }
 
-    static function rules(){
+    public static function rules(): array
+    {
         return [
             'title' => 'required|string|max:255',
             'description' => 'required|string',
@@ -114,11 +118,12 @@ class Event extends Model
             'event_date_end' => 'nullable|date|after_or_equal:event_date',
             'location' => 'required|string',
             'image' => 'nullable|image|max:2048',
-            'status' => 'required', new Enum(Status::class),
+            'status' => ['required', new Enum(Status::class)],
         ];
     }
 
-    public function user(){
+    public function user()
+    {
         return $this->belongsTo(User::class);
     }
 }

@@ -38,13 +38,16 @@
             <div class="mb-1">
                 <span class="text-black-50">
                     <i class="bi bi-calendar-date me-1"></i>
-                    {{ isset($item->published_at) ? \Carbon\Carbon::parse($item->published_at)->format('d-m-Y') : '---' }}
+                    {{ $item->event_date?->format('d-m-Y') ?? '---' }}
+                    @if ($item->event_date_end)
+                        — {{ $item->event_date_end->format('d-m-Y') }}
+                    @endif
                 </span>
             </div>
             <div class="mb-1">
                 <span class="text-black-50">
                     <i class="bi bi-person me-1"></i>
-                    {{$item->user->name}}
+                    {{ $item->user?->name ?? 'Autor no disponible' }}
                 </span>
             </div>
             <div class="mb-1">
@@ -54,7 +57,7 @@
                 </span>
             </div>
             <p class="card-text text-black-50 mb-1 text-break" style="white-space: pre-line;">
-                {!! $item->content !!}
+                {!! $item->description !!}
             </p>
         </div>
         <div class="card-footer py-3 bg-white text-muted">
@@ -63,21 +66,21 @@
                     {{ $item->status->label() }}
                 </span>
                 <div class="d-flex align-items-center gap-2">
-                    @can('admin.news.edit')
-                        <a href="{{ route('admin.news.edit', $item) }}"
+                    @can('admin.events.edit')
+                        <a href="{{ route('admin.events.edit', $item) }}"
                         class="btn btn-sm btn-primary"
                         title="Editar">
                             <i class="bi bi-pencil-fill"></i>
                         </a>
                     @endcan
 
-                    @can('admin.news.destroy')
-                        <form action="{{ route('admin.news.destroy', $item) }}"
+                    @can('admin.events.destroy')
+                        <form action="{{ route('admin.events.destroy', $item) }}"
                             method="POST" class="m-0 p-0">
                             @csrf
                             @method('DELETE')
                             <button class="btn btn-sm btn-danger"
-                                    onclick="return confirm('¿Eliminar esta noticia?')"
+                                    onclick="return confirm('¿Eliminar este evento?')"
                                     title="Eliminar">
                                 <i class="bi bi-trash3-fill"></i>
                             </button>

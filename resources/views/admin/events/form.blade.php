@@ -95,7 +95,7 @@
                     <label for="event_date_end">Date end</label>
                     <div class="input-group align-items-center">
                         <input type="text" name="event_date_end" class="form-control campo-fecha" placeholder="dd-mm-yyyy"
-                            value="{{null !== old('event_date_end') ? date('d-m-Y', strtotime(old('event_date_end'))) : date('d-m-Y', strtotime($item->event_date_end))}}" required>
+                            value="{{ old('event_date_end', $item->event_date_end?->format('d-m-Y')) }}">
                         <i class="bi bi-calendar-date ml-1"></i>
                     </div>
                     @error('event_date_end')

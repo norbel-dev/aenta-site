@@ -41,14 +41,20 @@ class HomeController extends Controller
         return view('admin.centers.show', compact('center'));
     }
 
-    public function event()
+    public function events()
     {
-        return view('admin.events.show', ['events' => Event::take(10)->get()]);
+        return view('landing.events.index', [
+            'events' => Event::where('status', Status::EDIT_PUBLISHED)
+                ->orderBy('event_date')
+                ->paginate(9),
+        ]);
     }
 
-    public function show_event(Event $event)
+    public function showEvent(Event $event)
     {
-        return view('admin.events.show', compact('event'));
+        abort_unless($event->status === Status::EDIT_PUBLISHED, 404);
+
+        return view('landing.events.show', compact('event'));
     }
 
     public function news()

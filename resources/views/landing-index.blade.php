@@ -76,13 +76,13 @@
                     <h5 class="card-title">Eventos</h5>
                     <ul class="list-group list-group-flush">
                         @forelse($eventos as $item)
-                            <li class="list-group-item">{{ $item->title }}</li>
+                            <li class="list-group-item"><a href="{{ route('show_event', $item) }}" class="card-link">{{ $item->title }}</a></li>
                         @empty
                             <li class="list-group-item">No hay eventos.</li>
                         @endforelse
                     </ul>
                     @if(isset($eventos) && $eventos->count() > 3)
-                    <a href="#" class="card-link mt-auto">mostrar más...</a>
+                    <a href="{{ route('events') }}" class="card-link mt-auto">mostrar más...</a>
                     @endif
                 </div>
             </div>
